@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://ciacnxn0vlnk6"]
+
+[ext_resource type="Script" uid="uid://ctt7h8rb4fv2j" path="res://scripts/player/PlayerController.cs" id="1_lvefo"]
+[ext_resource type="PackedScene" uid="uid://uradp5x5kbux" path="res://scenes/player/pad.tscn" id="2_0cfoe"]
+[ext_resource type="Script" uid="uid://cwtumc3gmx7hb" path="res://scripts/player/HitFeedback.cs" id="4_0nonk"]
+
+[sub_resource type="Gradient" id="Gradient_0nonk"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5tt2p"]
+gradient = SubResource("Gradient_0nonk")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iivv4"]
+
+[node name="PlayerController" type="Node2D"]
+script = ExtResource("1_lvefo")
+
+[node name="LRPads" type="Node2D" parent="."]
+
+[node name="LeftPad" parent="LRPads" instance=ExtResource("2_0cfoe")]
+position = Vector2(-100, 0)
+rotation = 1.5707964
+padColor = Color(0, 0.99607843, 0, 0.5882353)
+
+[node name="RightPad" parent="LRPads" instance=ExtResource("2_0cfoe")]
+position = Vector2(100, 0)
+rotation = 1.5707964
+padColor = Color(1, 0.64705884, 0, 0.5882353)
+
+[node name="TBPads" type="Node2D" parent="."]
+
+[node name="TopPad" parent="TBPads" instance=ExtResource("2_0cfoe")]
+position = Vector2(0, -100)
+padColor = Color(0, 1, 1, 0.5882353)
+
+[node name="BottomPad" parent="TBPads" instance=ExtResource("2_0cfoe")]
+position = Vector2(0, 100)
+padColor = Color(1, 0, 1, 0.5882353)
+
+[node name="Rails" type="Node2D" parent="."]
+
+[node name="LeftRailSprite" type="Sprite2D" parent="Rails"]
+z_index = -2
+position = Vector2(-100, 0)
+rotation = 1.5707964
+scale = Vector2(2.5, 0.05)
+texture = SubResource("GradientTexture2D_5tt2p")
+
+[node name="BottomRailSprite" type="Sprite2D" parent="Rails"]
+z_index = -2
+position = Vector2(0, 100)
+scale = Vector2(2.5, 0.05)
+texture = SubResource("GradientTexture2D_5tt2p")
+
+[node name="RightRailSprite" type="Sprite2D" parent="Rails"]
+z_index = -2
+position = Vector2(100, 0)
+rotation = 1.5707964
+scale = Vector2(2.5, 0.05)
+texture = SubResource("GradientTexture2D_5tt2p")
+
+[node name="TopRailSprite" type="Sprite2D" parent="Rails"]
+z_index = -2
+position = Vector2(0, -100)
+scale = Vector2(2.5, 0.05)
+texture = SubResource("GradientTexture2D_5tt2p")
+
+[node name="KillZone" type="Node2D" parent="."]
+
+[node name="KillzoneHitbox" type="Area2D" parent="KillZone"]
+
+[node name="collision_shape_2d" type="CollisionShape2D" parent="KillZone/KillzoneHitbox"]
+scale = Vector2(3, 3)
+shape = SubResource("RectangleShape2D_iivv4")
+
+[node name="HitFeedback" type="Label" parent="."]
+offset_left = -30.0
+offset_top = -12.0
+offset_right = 30.0
+offset_bottom = 12.0
+text = "Great!"
+horizontal_alignment = 1
+script = ExtResource("4_0nonk")

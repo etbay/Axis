@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://uradp5x5kbux"]
+
+[ext_resource type="Script" uid="uid://bn6nv5jqkb6k1" path="res://scripts/player/Pad.cs" id="1_bfskj"]
+[ext_resource type="Texture2D" uid="uid://et037olil3hv" path="res://assets/KeyPadShape.png" id="3_4hfr1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_irfqe"]
+
+[node name="Pad" type="Node2D"]
+script = ExtResource("1_bfskj")
+
+[node name="PadSprite" type="Sprite2D" parent="."]
+clip_children = 2
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_4hfr1")
+
+[node name="PadSprite2" type="Sprite2D" parent="PadSprite"]
+z_index = -1
+scale = Vector2(1.2999998, 1.2999998)
+texture = ExtResource("3_4hfr1")
+
+[node name="PadHitbox" type="Area2D" parent="."]
+
+[node name="HitboxCollision" type="CollisionShape2D" parent="PadHitbox"]
+rotation = 0.7853982
+scale = Vector2(1.7, 1.7)
+shape = SubResource("RectangleShape2D_irfqe")
+disabled = true
