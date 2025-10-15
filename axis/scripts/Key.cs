@@ -3,7 +3,7 @@ using System;
 
 public partial class Key : Node2D
 {
-    public static Action<string> KeyHit;
+    public static Action<string, int> KeyHit;
     public enum KeyDirection
     {
         UP, DOWN, LEFT, RIGHT
@@ -50,6 +50,7 @@ public partial class Key : Node2D
         if (this.light == null)
             this.light = GetChild<PointLight2D>(2);
 
+        // sets key data for direction key is traveling
         switch (keyDirection)
         {
             case KeyDirection.UP:
@@ -114,7 +115,7 @@ public partial class Key : Node2D
         if (area.Name != "PadHitbox")
         {
             if (area.Name == "KillzoneHitbox")
-                KeyHit?.Invoke("Miss");
+                KeyHit?.Invoke("Miss", 0);
     
             this.QueueFree();
             return;
@@ -123,19 +124,19 @@ public partial class Key : Node2D
         Vector2 posDifference = (this.GlobalPosition - area.GlobalPosition).Abs();
         if (posDifference.X < 10 && posDifference.Y < 10)
         {
-            KeyHit?.Invoke("Perfect!");
+            KeyHit?.Invoke("Perfect!", 100);
         }
         else if (posDifference.X < 20 && posDifference.Y < 20)
         {
-            KeyHit?.Invoke("Great!");
+            KeyHit?.Invoke("Great!", 50);
         }
         else if (posDifference.X < 40 && posDifference.Y < 40)
         {
-            KeyHit?.Invoke("Good!");
+            KeyHit?.Invoke("Good!", 30);
         }
         else
         {
-            KeyHit?.Invoke("Okay");
+            KeyHit?.Invoke("Okay", 15);
         }
         this.QueueFree();
     }

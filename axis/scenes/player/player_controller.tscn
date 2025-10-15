@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ctt7h8rb4fv2j" path="res://scripts/player/PlayerController.cs" id="1_lvefo"]
 [ext_resource type="PackedScene" uid="uid://uradp5x5kbux" path="res://scenes/player/pad.tscn" id="2_0cfoe"]
-[ext_resource type="Script" uid="uid://cwtumc3gmx7hb" path="res://scripts/player/HitFeedback.cs" id="4_0nonk"]
+[ext_resource type="Script" uid="uid://c4k0nj3o6c3ra" path="res://scripts/player/GameUserInterface.cs" id="3_0cfoe"]
 
 [sub_resource type="Gradient" id="Gradient_0nonk"]
 offsets = PackedFloat32Array(1)
@@ -74,11 +74,33 @@ texture = SubResource("GradientTexture2D_5tt2p")
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_iivv4")
 
-[node name="HitFeedback" type="Label" parent="."]
+[node name="GameUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -350.0
+offset_top = -350.0
+offset_right = 350.0
+offset_bottom = 350.0
+script = ExtResource("3_0cfoe")
+
+[node name="HitFeedback" type="Label" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -30.0
 offset_top = -12.0
 offset_right = 30.0
 offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "Great!"
 horizontal_alignment = 1
-script = ExtResource("4_0nonk")
+
+[node name="Points" type="Label" parent="GameUI"]
+layout_mode = 1
+offset_right = 148.0
+offset_bottom = 34.0
+text = "1000000"
