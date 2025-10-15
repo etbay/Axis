@@ -1,2 +1,2 @@
-# NESW
+# Axis
 
