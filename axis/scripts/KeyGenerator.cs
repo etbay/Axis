@@ -11,6 +11,7 @@ public partial class KeyGenerator : Node2D
     [Export] private Godot.Collections.Array<Key.KeyDirection> keyDirections;
     [Export] private Godot.Collections.Array<Key.KeyOffset> keyOffsets;
     [Export] public AudioStreamPlayer2D song;
+    [Export] private int levelIndex;
     private int startTime;
     private bool isLevelDone = false;
 
@@ -32,7 +33,6 @@ public partial class KeyGenerator : Node2D
     public override void _Process(double delta)
     {
         double songTimeMs = song.GetPlaybackPosition() * 1000.0;
-        GD.Print(songTimeMs / 100);
 
         if (keySpawnQueue.Count > 0 && songTimeMs >= keySpawnQueue.Peek().Item1 * 100 - 1680)
         {
@@ -48,10 +48,20 @@ public partial class KeyGenerator : Node2D
 
             this.AddChild(key);
         }
-        else if (keySpawnQueue.Count == 0 && !isLevelDone)
+        else if (keySpawnQueue.Count == 0 && !isLevelDone && !song.Playing)
         {
-            //isLevelDone = true;
-            //_ = LoadLevelSummary();
+            isLevelDone = true;
+            if (PlayerData.LevelScores.ContainsKey(levelIndex)
+                && PlayerData.LevelScores[levelIndex] < PlayerData.TotalScore)
+            {
+                PlayerData.LevelScores[levelIndex] = PlayerData.TotalScore;
+            }
+            else if (!PlayerData.LevelScores.ContainsKey(levelIndex))
+            {
+                PlayerData.LevelScores[levelIndex] = PlayerData.TotalScore;
+            }
+            PlayerData.SaveData();
+            _ = LoadLevelSummary();
         }
     }
 
