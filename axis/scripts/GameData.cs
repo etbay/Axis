@@ -19,11 +19,13 @@ public static class GameData
     public static PackedScene EndlessMode { get; private set; }
     public static List<PackedScene> Levels { get; private set; }
     public static int KeySpeed { get; set; } = 2;
+    public static int KeyTravelDistance { get; } = 260;
 
     public static void Initialize()
     {
         MainMenu = (PackedScene)ResourceLoader.Load("res://scenes/levels/main_menu.tscn");
         LevelSummary = (PackedScene)ResourceLoader.Load("res://scenes/levels/level_summary.tscn");
         EndlessMode = (PackedScene)ResourceLoader.Load("res://scenes/levels/endless_mode.tscn");
+        
     }
 }

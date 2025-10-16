@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 public partial class KeyGenerator : Node2D
 {
     [Export] private PackedScene KeyScene;
-    [Export] private Godot.Collections.Array<int> keySpawnTimeSeconds;
+    [Export] private Godot.Collections.Array<int> keySpawnTimeMs;
     [Export] private Godot.Collections.Array<Key.KeyDirection> keyDirections;
     [Export] private Godot.Collections.Array<Key.KeyOffset> keyOffsets;
+    [Export] public AudioStreamPlayer2D song;
     private int startTime;
     private bool isLevelDone = false;
 
@@ -21,16 +22,19 @@ public partial class KeyGenerator : Node2D
 
     public override void _Ready()
     {
-        startTime = (int)(Time.GetTicksMsec() / 1000);
-        for (int i = 0; i < keySpawnTimeSeconds.Count; i++)
+        startTime = (int)Time.GetTicksMsec();
+        for (int i = 0; i < keySpawnTimeMs.Count; i++)
         {
-            keySpawnQueue.Enqueue(new Tuple<int, int>(keySpawnTimeSeconds[i], i));
+            keySpawnQueue.Enqueue(new Tuple<int, int>(keySpawnTimeMs[i], i));
         }
     }
 
     public override void _Process(double delta)
     {
-        if (keySpawnQueue.Count > 0 && keySpawnQueue.Peek().Item1 == (int)(Time.GetTicksMsec() / 1000) - startTime)
+        double songTimeMs = song.GetPlaybackPosition() * 1000.0;
+        GD.Print(songTimeMs / 100);
+
+        if (keySpawnQueue.Count > 0 && songTimeMs >= keySpawnQueue.Peek().Item1 * 100 - 1680)
         {
             var key = KeyScene.Instantiate();
 
@@ -39,6 +43,7 @@ public partial class KeyGenerator : Node2D
                 int index = keySpawnQueue.Dequeue().Item2;
 
                 k.SetData(keyDirections[index], keyOffsets[index]);
+                k.SpawnTimeMs = songTimeMs;
             }
 
             this.AddChild(key);

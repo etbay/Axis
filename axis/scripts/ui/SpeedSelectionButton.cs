@@ -14,6 +14,7 @@ public partial class SpeedSelectionButton : Button
     private void ChangeKeySpeed()
     {
         GameData.KeySpeed = this.speed;
+        Key.IsInLevel = false;
         SpeedSelected?.Invoke();
     }
 }

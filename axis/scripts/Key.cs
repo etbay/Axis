@@ -4,6 +4,7 @@ using System;
 public partial class Key : Node2D
 {
     public static Action<string, int> KeyHit;
+    public static bool IsInLevel;
     public enum KeyDirection
     {
         UP, DOWN, LEFT, RIGHT
@@ -26,6 +27,8 @@ public partial class Key : Node2D
     private Color color;
     private PointLight2D light;
     private Area2D hitbox;
+    private double travelTimeMs = 1600;
+    public double SpawnTimeMs { get; set; } = 0;
 
     public Vector2 SpawnPosition
     {
@@ -106,9 +109,26 @@ public partial class Key : Node2D
         this.speed = GameData.KeySpeed;
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void _Process(double delta)
     {
-        this.Position += this.direction * this.speed;
+        if (!IsInLevel)
+        {
+            this.Position += this.direction * this.speed;
+        }
+        else
+        {
+            MoveLevelKey();
+        }
+    }
+
+    private void MoveLevelKey()
+    {
+        if (GetParent() is KeyGenerator generator)
+        {
+            double songTimeMs = generator.song.GetPlaybackPosition() * 1000.0;
+            double t = (songTimeMs - SpawnTimeMs) / travelTimeMs;
+            this.Position = this.spawnPosition + (this.direction * (GameData.KeyTravelDistance + 5) * (float)t);
+        }
     }
 
     private void OnHitboxEntered(Area2D area)
