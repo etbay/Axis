@@ -7,9 +7,9 @@ public partial class LevelHighScoreLabel : Label
 
     public override void _Ready()
     {
-        if (PlayerData.EndlessScores.ContainsKey(levelIndex))
+        if (PlayerData.LevelScores.ContainsKey(levelIndex))
         {
-            this.Text = "High Score: " + PlayerData.EndlessScores[levelIndex];
+            this.Text = "High Score: " + PlayerData.LevelScores[levelIndex];
         }
         else
         {

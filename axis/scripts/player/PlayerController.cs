@@ -38,22 +38,50 @@ public partial class PlayerController : Node2D
 
     private void MovePads()
     {
-        if (Input.IsActionJustPressed("move_pad_up") && leftRightPads.Position > Vector2.Up * maxDistance)
+        if (Input.IsActionJustPressed("move_pad_up"))
         {
-            leftRightPads.Position += Vector2.Up * movementDistance;
+            if (leftRightPads.Position > Vector2.Up * maxDistance)
+            {
+                leftRightPads.Position += Vector2.Up * movementDistance;
+            }
+            else
+            {
+                leftRightPads.Position -= Vector2.Up * movementDistance * 2;
+            }
         }
-        else if (Input.IsActionJustPressed("move_pad_down") && leftRightPads.Position < Vector2.Down * maxDistance)
+        else if (Input.IsActionJustPressed("move_pad_down"))
         {
-            leftRightPads.Position += Vector2.Down * movementDistance;
+            if (leftRightPads.Position < Vector2.Down * maxDistance)
+            {
+                leftRightPads.Position += Vector2.Down * movementDistance;
+            }
+            else
+            {
+                leftRightPads.Position -= Vector2.Down * movementDistance * 2;
+            }
         }
 
-        if (Input.IsActionJustPressed("move_pad_left") && upDownPads.Position > Vector2.Left * maxDistance)
+        if (Input.IsActionJustPressed("move_pad_left"))
         {
-            upDownPads.Position += Vector2.Left * movementDistance;
+            if (upDownPads.Position > Vector2.Left * maxDistance)
+            {
+                upDownPads.Position += Vector2.Left * movementDistance;
+            }
+            else
+            {
+                upDownPads.Position -= Vector2.Left * movementDistance * 2;
+            }
         }
-        else if (Input.IsActionJustPressed("move_pad_right") && upDownPads.Position < Vector2.Right * maxDistance)
+        else if (Input.IsActionJustPressed("move_pad_right"))
         {
-            upDownPads.Position += Vector2.Right * movementDistance;
+            if (upDownPads.Position < Vector2.Right * maxDistance)
+            {
+                upDownPads.Position += Vector2.Right * movementDistance;
+            }
+            else
+            {
+                upDownPads.Position -= Vector2.Right * movementDistance * 2;
+            }
         }
     }
     
