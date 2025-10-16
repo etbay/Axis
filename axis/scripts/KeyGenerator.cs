@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 public partial class KeyGenerator : Node2D
 {
@@ -10,6 +11,7 @@ public partial class KeyGenerator : Node2D
     [Export] private Godot.Collections.Array<Key.KeyDirection> keyDirections;
     [Export] private Godot.Collections.Array<Key.KeyOffset> keyOffsets;
     private int startTime;
+    private bool isLevelDone = false;
 
     /// <summary>
     /// Queue that contains a tuple with Item1 referring to the seconds it should take to spawn
@@ -41,9 +43,16 @@ public partial class KeyGenerator : Node2D
 
             this.AddChild(key);
         }
-        else if (keySpawnQueue.Count == 0)
+        else if (keySpawnQueue.Count == 0 && !isLevelDone)
         {
-            // change to data scene
+            isLevelDone = true;
+            _ = LoadLevelSummary();
         }
+    }
+
+    private async Task LoadLevelSummary()
+    {
+        await ToSignal(GetTree().CreateTimer(3.0f), "timeout");
+        GetTree().ChangeSceneToPacked(GameData.LevelSummary);
     }
 }

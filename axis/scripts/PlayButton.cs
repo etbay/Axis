@@ -3,7 +3,7 @@ using System;
 
 public partial class PlayButton : Button
 {
-    [Export] PackedScene level1;
+    [Export] private PackedScene level1;
 
     public override void _Ready()
     {

@@ -1,0 +1,77 @@
+[gd_scene load_steps=2 format=3 uid="uid://br4uyycjwqaxk"]
+
+[ext_resource type="Script" uid="uid://cl1lf2v0kt01x" path="res://scripts/StatDisplay.cs" id="1_sqr8q"]
+
+[node name="Stat Display Control" type="Control" node_paths=PackedStringArray("numHitRatings", "hitRatingScores", "totalScore")]
+custom_minimum_size = Vector2(720, 720)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sqr8q")
+numHitRatings = NodePath("Stats/NumHitRatings")
+hitRatingScores = NodePath("Stats/HitRatingScores")
+totalScore = NodePath("TotalScore")
+
+[node name="Stats" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -142.5
+offset_top = -105.06
+offset_right = 142.5
+offset_bottom = 76.94
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HitRatings" type="Label" parent="Stats"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Perfect:
+Great:
+Good:
+Okay:
+Miss:"
+
+[node name="NumHitRatings" type="Label" parent="Stats"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "x10
+x3
+x4
+x5
+x6"
+
+[node name="HitRatingScores" type="Label" parent="Stats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "1000
+150
+120
+75
+0"
+
+[node name="TotalScore" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.5
+offset_top = 100.0
+offset_right = 73.5
+offset_bottom = 139.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 28
+text = "Total: 1375"
+horizontal_alignment = 1

@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2d4xyx5np4ng"]
+[gd_scene load_steps=6 format=3 uid="uid://d2d4xyx5np4ng"]
 
+[ext_resource type="Script" uid="uid://bbby1xha4vrei" path="res://scenes/levels/GameManager.cs" id="1_ds0u5"]
 [ext_resource type="PackedScene" uid="uid://ciacnxn0vlnk6" path="res://scenes/player/player_controller.tscn" id="1_mm7tu"]
 [ext_resource type="PackedScene" uid="uid://cn02xj3jb47ex" path="res://scenes/key_generator.tscn" id="2_6lum8"]
 [ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="3_6lum8"]
@@ -7,6 +8,7 @@
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mm7tu"]
 
 [node name="level_template" type="Node2D"]
+script = ExtResource("1_ds0u5")
 
 [node name="PlayerController" parent="." instance=ExtResource("1_mm7tu")]
 

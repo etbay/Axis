@@ -115,7 +115,10 @@ public partial class Key : Node2D
         if (area.Name != "PadHitbox")
         {
             if (area.Name == "KillzoneHitbox")
+            {
                 KeyHit?.Invoke("Miss", 0);
+                PlayerData.NumMisses++;
+            }
     
             this.QueueFree();
             return;
@@ -124,19 +127,23 @@ public partial class Key : Node2D
         Vector2 posDifference = (this.GlobalPosition - area.GlobalPosition).Abs();
         if (posDifference.X < 10 && posDifference.Y < 10)
         {
-            KeyHit?.Invoke("Perfect!", 100);
+            KeyHit?.Invoke("Perfect!", GameData.PerfectHitValue);
+            PlayerData.NumPerfects++;
         }
         else if (posDifference.X < 20 && posDifference.Y < 20)
         {
-            KeyHit?.Invoke("Great!", 50);
+            KeyHit?.Invoke("Great!", GameData.GreatHitValue);
+            PlayerData.NumGreats++;
         }
         else if (posDifference.X < 40 && posDifference.Y < 40)
         {
-            KeyHit?.Invoke("Good!", 30);
+            KeyHit?.Invoke("Good!", GameData.GoodHitValue);
+            PlayerData.NumGoods++;
         }
         else
         {
-            KeyHit?.Invoke("Okay", 15);
+            KeyHit?.Invoke("Okay", GameData.OkayHitValue);
+            PlayerData.NumOkays++;
         }
         this.QueueFree();
     }
