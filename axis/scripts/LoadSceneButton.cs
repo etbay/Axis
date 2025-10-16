@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public partial class PlayButton : Button
+public partial class LoadSceneButton : Button
 {
-    [Export] private PackedScene level1;
+    [Export] private PackedScene scene;
 
     public override void _Ready()
     {
@@ -12,6 +12,6 @@ public partial class PlayButton : Button
 
     private void OnButtonPress()
     {
-        GetTree().ChangeSceneToPacked(level1);
+        GetTree().ChangeSceneToPacked(scene);
     }
 }

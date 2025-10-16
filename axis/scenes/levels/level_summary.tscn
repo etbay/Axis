@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://10mwchmknsij"]
+[gd_scene load_steps=5 format=3 uid="uid://10mwchmknsij"]
 
 [ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="1_45iqn"]
 [ext_resource type="PackedScene" uid="uid://br4uyycjwqaxk" path="res://scenes/stat_display.tscn" id="2_tpkee"]
+[ext_resource type="Script" uid="uid://duu88pxoiea16" path="res://scripts/LoadSceneButton.cs" id="3_i1ej2"]
+[ext_resource type="PackedScene" uid="uid://cuwnmvtw5dtwr" path="res://scenes/levels/main_menu.tscn" id="4_qok5u"]
 
 [node name="level_summary" type="Node2D"]
 
@@ -13,3 +15,21 @@ scale = Vector2(12, 12)
 texture = ExtResource("1_45iqn")
 
 [node name="Stat Display Control" parent="." instance=ExtResource("2_tpkee")]
+
+[node name="Main Menu Button" type="Button" parent="Stat Display Control"]
+custom_minimum_size = Vector2(160.895, 45.115)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.448
+offset_top = -147.08002
+offset_right = 80.44702
+offset_bottom = -101.96503
+grow_horizontal = 2
+grow_vertical = 0
+text = "Main Menu"
+script = ExtResource("3_i1ej2")
+scene = ExtResource("4_qok5u")

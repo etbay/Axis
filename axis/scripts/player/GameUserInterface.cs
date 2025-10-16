@@ -17,6 +17,11 @@ public partial class GameUserInterface : Control
         Key.KeyHit += OnKeyHit;
     }
 
+    public override void _ExitTree()
+    {
+        Key.KeyHit -= OnKeyHit;
+    }
+
     private void OnKeyHit(string text, int pointValue)
     {
         if (fadeOut != null && fadeOut.IsRunning())
@@ -30,4 +35,6 @@ public partial class GameUserInterface : Control
         fadeOut.TweenProperty(this.hitRating, "modulate:a", 0f, 1);
         fadeOut.Play();
     }
+
+    
 }
