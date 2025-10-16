@@ -9,6 +9,7 @@ public partial class KeyGenerator : Node2D
     [Export] private Godot.Collections.Array<int> keySpawnTimeSeconds;
     [Export] private Godot.Collections.Array<Key.KeyDirection> keyDirections;
     [Export] private Godot.Collections.Array<Key.KeyOffset> keyOffsets;
+    private int startTime;
 
     /// <summary>
     /// Queue that contains a tuple with Item1 referring to the seconds it should take to spawn
@@ -18,6 +19,7 @@ public partial class KeyGenerator : Node2D
 
     public override void _Ready()
     {
+        startTime = (int)(Time.GetTicksMsec() / 1000);
         for (int i = 0; i < keySpawnTimeSeconds.Count; i++)
         {
             keySpawnQueue.Enqueue(new Tuple<int, int>(keySpawnTimeSeconds[i], i));
@@ -26,18 +28,22 @@ public partial class KeyGenerator : Node2D
 
     public override void _Process(double delta)
     {
-        if (keySpawnQueue.Count > 0 && keySpawnQueue.Peek().Item1 == (int)(Time.GetTicksMsec() / 1000))
+        if (keySpawnQueue.Count > 0 && keySpawnQueue.Peek().Item1 == (int)(Time.GetTicksMsec() / 1000) - startTime)
         {
             var key = KeyScene.Instantiate();
 
             if (key is Key k)
             {
                 int index = keySpawnQueue.Dequeue().Item2;
-                
+
                 k.SetData(keyDirections[index], keyOffsets[index]);
             }
 
             this.AddChild(key);
+        }
+        else if (keySpawnQueue.Count == 0)
+        {
+            // change to data scene
         }
     }
 }
