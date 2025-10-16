@@ -29,12 +29,11 @@ public partial class GameUserInterface : Control
 
         this.hitRating.Text = text;
         this.points.Text = (int.Parse(this.points.Text) + pointValue).ToString();
+        PlayerData.TotalScore = int.Parse(this.points.Text);
         this.hitRating.Modulate = Color.Color8(255, 255, 255, 255);
 
         fadeOut = CreateTween();
         fadeOut.TweenProperty(this.hitRating, "modulate:a", 0f, 1);
         fadeOut.Play();
     }
-
-    
 }

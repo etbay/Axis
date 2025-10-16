@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://cuwnmvtw5dtwr"]
+[gd_scene load_steps=6 format=3 uid="uid://cuwnmvtw5dtwr"]
 
 [ext_resource type="Script" uid="uid://duu88pxoiea16" path="res://scripts/ui/LoadSceneButton.cs" id="1_721jg"]
+[ext_resource type="Script" uid="uid://d26yeutbpbn3" path="res://scripts/GameLoader.cs" id="1_fkd6t"]
 [ext_resource type="PackedScene" uid="uid://d2d4xyx5np4ng" path="res://scenes/levels/level_template.tscn" id="2_geflf"]
 [ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="3_fkd6t"]
 [ext_resource type="PackedScene" uid="uid://ccoky6bbpcp7x" path="res://scenes/levels/endless_mode.tscn" id="3_geflf"]
 
 [node name="main_menu" type="Node2D"]
+script = ExtResource("1_fkd6t")
 
 [node name="UI" type="Control" parent="."]
 custom_minimum_size = Vector2(720, 720)

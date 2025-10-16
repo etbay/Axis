@@ -45,8 +45,8 @@ public partial class KeyGenerator : Node2D
         }
         else if (keySpawnQueue.Count == 0 && !isLevelDone)
         {
-            isLevelDone = true;
-            _ = LoadLevelSummary();
+            //isLevelDone = true;
+            //_ = LoadLevelSummary();
         }
     }
 

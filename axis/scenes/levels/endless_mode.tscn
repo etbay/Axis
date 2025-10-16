@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ccoky6bbpcp7x"]
+[gd_scene load_steps=10 format=3 uid="uid://ccoky6bbpcp7x"]
 
 [ext_resource type="Script" uid="uid://bbby1xha4vrei" path="res://scripts/GameManager.cs" id="1_b8rg6"]
 [ext_resource type="PackedScene" uid="uid://ciacnxn0vlnk6" path="res://scenes/player/player_controller.tscn" id="2_nev0s"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bqutv0sm7vqva" path="res://scripts/RandomKeyGenerator.cs" id="4_fgnjr"]
 [ext_resource type="Script" uid="uid://2rebm2p5l4q2" path="res://scripts/ui/DifficultySelect.cs" id="5_bh0n7"]
 [ext_resource type="Script" uid="uid://bjl6dw7pa6dqr" path="res://scripts/ui/SpeedSelectionButton.cs" id="6_nev0s"]
+[ext_resource type="Script" uid="uid://dqne3e1ddvnii" path="res://scripts/ui/EndlessHighScoreLabel.cs" id="8_i3qp7"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mm7tu"]
 
@@ -68,21 +69,24 @@ theme_override_font_sizes/font_size = 48
 text = "Select Difficulty"
 horizontal_alignment = 1
 
-[node name="Speed Options" type="VBoxContainer" parent="Difficulty Select"]
+[node name="h_box_container" type="HBoxContainer" parent="Difficulty Select"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -202.0
+offset_top = -160.0
+offset_right = 202.0
+offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Boring" type="Button" parent="Difficulty Select/Speed Options"]
+[node name="Speed Options" type="VBoxContainer" parent="Difficulty Select/h_box_container"]
+layout_mode = 2
+
+[node name="Boring" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -90,7 +94,7 @@ text = "1 (Boring)"
 script = ExtResource("6_nev0s")
 speed = 1
 
-[node name="Easy" type="Button" parent="Difficulty Select/Speed Options"]
+[node name="Easy" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -98,7 +102,7 @@ text = "2 (Easy)"
 script = ExtResource("6_nev0s")
 speed = 2
 
-[node name="Normal" type="Button" parent="Difficulty Select/Speed Options"]
+[node name="Normal" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -106,7 +110,7 @@ text = "3 (Normal)"
 script = ExtResource("6_nev0s")
 speed = 3
 
-[node name="Hard" type="Button" parent="Difficulty Select/Speed Options"]
+[node name="Hard" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -114,7 +118,7 @@ text = "4 (Hard)"
 script = ExtResource("6_nev0s")
 speed = 4
 
-[node name="Very Hard" type="Button" parent="Difficulty Select/Speed Options"]
+[node name="Very Hard" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -122,12 +126,75 @@ text = "5 (Very Hard)"
 script = ExtResource("6_nev0s")
 speed = 5
 
-[node name="Extra Hard" type="Button" parent="Difficulty Select/Speed Options"]
+[node name="Extra Hard" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "6 (Impossible)"
 script = ExtResource("6_nev0s")
+speed = 6
+
+[node name="Speed Options2" type="VBoxContainer" parent="Difficulty Select/h_box_container"]
+layout_mode = 2
+
+[node name="BoringHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+custom_minimum_size = Vector2(198.425, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "High Score: "
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_i3qp7")
+speed = 1
+
+[node name="EasyHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+custom_minimum_size = Vector2(198.425, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "High Score: "
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_i3qp7")
+speed = 2
+
+[node name="NormalHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+custom_minimum_size = Vector2(198.425, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "High Score: "
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_i3qp7")
+speed = 3
+
+[node name="HardHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+custom_minimum_size = Vector2(198.425, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "High Score: "
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_i3qp7")
+speed = 4
+
+[node name="VeryHardHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+custom_minimum_size = Vector2(198.425, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "High Score: "
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_i3qp7")
+speed = 5
+
+[node name="ImpossibleHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+custom_minimum_size = Vector2(198.425, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "High Score: "
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_i3qp7")
 speed = 6
 
 [editable path="PlayerController"]

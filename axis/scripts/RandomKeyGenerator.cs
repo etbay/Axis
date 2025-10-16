@@ -30,7 +30,7 @@ public partial class RandomKeyGenerator : Node
             startTime = (int)Time.GetTicksMsec();
         int currentTime = (int)Time.GetTicksMsec();
 
-        if (currentTime - startTime >= 3 && currentTime - this.lastTime >= intervalMs)
+        if (currentTime - startTime >= 3000 && currentTime - this.lastTime >= intervalMs)
         {
             this.lastTime = currentTime;
             GenerateKey();
@@ -38,6 +38,15 @@ public partial class RandomKeyGenerator : Node
 
         if (PlayerData.NumMisses >= 3)
         {
+            if (PlayerData.EndlessScores.ContainsKey(GameData.KeySpeed)
+                && PlayerData.EndlessScores[GameData.KeySpeed] < PlayerData.TotalScore)
+            {
+                PlayerData.EndlessScores[GameData.KeySpeed] = PlayerData.TotalScore;
+            }
+            else if (!PlayerData.EndlessScores.ContainsKey(GameData.KeySpeed))
+            {
+                PlayerData.EndlessScores[GameData.KeySpeed] = PlayerData.TotalScore;
+            }
             GetTree().ChangeSceneToPacked(GameData.LevelSummary);
         }
     }

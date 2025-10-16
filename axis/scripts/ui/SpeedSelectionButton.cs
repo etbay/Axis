@@ -3,7 +3,7 @@ using System;
 
 public partial class SpeedSelectionButton : Button
 {
-    [Export] int speed;
+    [Export] private int speed;
     public static Action SpeedSelected;
 
     public override void _Ready()
