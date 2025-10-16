@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://br4uyycjwqaxk"]
 
-[ext_resource type="Script" uid="uid://cl1lf2v0kt01x" path="res://scripts/StatDisplay.cs" id="1_sqr8q"]
+[ext_resource type="Script" uid="uid://cl1lf2v0kt01x" path="res://scripts/ui/StatDisplay.cs" id="1_sqr8q"]
 
 [node name="Stat Display Control" type="Control" node_paths=PackedStringArray("numHitRatings", "hitRatingScores", "totalScore")]
 custom_minimum_size = Vector2(720, 720)

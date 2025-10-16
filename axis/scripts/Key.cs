@@ -11,7 +11,7 @@ public partial class Key : Node2D
 
     public enum KeyOffset
     {
-        NEGATIVE = -1, NONE = 0, POSITIVE = 1
+        NEGATIVE, NONE, POSITIVE
     }
 
     public enum KeyType
@@ -21,7 +21,7 @@ public partial class Key : Node2D
 
     private Vector2 spawnPosition;
     private Vector2 direction;
-    private int speed = 3;
+    private int speed;
     private Sprite2D sprite;
     private Color color;
     private PointLight2D light;
@@ -103,6 +103,7 @@ public partial class Key : Node2D
         this.hitbox.AreaEntered += OnHitboxEntered;
         this.sprite.Modulate = this.color;
         this.Position = this.SpawnPosition;
+        this.speed = GameData.KeySpeed;
     }
 
     public override void _PhysicsProcess(double delta)
