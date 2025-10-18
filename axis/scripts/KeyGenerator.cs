@@ -21,7 +21,7 @@ public partial class KeyGenerator : Node2D
     /// and with Item2 referring to the index of KeyDirections and keyOffsets corresponding to the key.
     /// </summary>
     private Queue<Tuple<int, int>> keySpawnQueue = new Queue<Tuple<int, int>>();
-    private Queue<Key> keySpawnOrder = new Queue<Key>();
+    private List<Key> keySpawnOrder = new List<Key>();
 
     public override void _Ready()
     {
@@ -46,7 +46,7 @@ public partial class KeyGenerator : Node2D
 
                 k.SetData(keyDirections[index], keyOffsets[index]);
                 k.SpawnTimeMs = songTimeMs;
-                this.keySpawnOrder.Enqueue(k);
+                this.keySpawnOrder.Add(k);
                 k.KeyDestroyed += OnKeyDestroy;
             }
 
@@ -70,9 +70,9 @@ public partial class KeyGenerator : Node2D
         }
     }
 
-    private void OnKeyDestroy(Key _)
+    private void OnKeyDestroy(Key key)
     {
-        this.keySpawnOrder.Dequeue();
+        this.keySpawnOrder.Remove(key);
         HighlightClosestKey();
     }
 
@@ -80,7 +80,7 @@ public partial class KeyGenerator : Node2D
     {
         if (this.keySpawnOrder.Count > 0)
         {
-            this.keySpawnOrder.Peek().Highlight();
+            this.keySpawnOrder[0].Highlight();
         }
     }
 

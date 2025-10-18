@@ -1,9 +1,8 @@
 using Godot;
 using System;
 
-public partial class Key : Node2D
+public partial class Key : Area2D
 {
-    public static Action<string, int> KeyHit;
     public event Action<Key> KeyDestroyed;
     public static bool IsInLevel;
     public enum KeyDirection
@@ -52,7 +51,7 @@ public partial class Key : Node2D
     public void SetData(KeyDirection keyDirection, KeyOffset keyOffset)
     {
         if (this.light == null)
-            this.light = GetChild<PointLight2D>(2);
+            this.light = GetChild<PointLight2D>(1);
 
         // sets key data for direction key is traveling
         switch (keyDirection)
@@ -103,9 +102,7 @@ public partial class Key : Node2D
     public override void _Ready()
     {
         this.sprite = GetChild<Sprite2D>(0);
-        this.hitbox = GetChild<Area2D>(1);
-        this.light = GetChild<PointLight2D>(2);
-        this.hitbox.AreaEntered += OnHitboxEntered;
+        this.light = GetChild<PointLight2D>(1);
         this.sprite.Modulate = this.color;
         this.Position = this.SpawnPosition;
         this.speed = GameData.KeySpeed;
@@ -143,43 +140,5 @@ public partial class Key : Node2D
             double t = (songTimeMs - SpawnTimeMs) / travelTimeMs;
             this.Position = this.spawnPosition + (this.direction * (GameData.KeyTravelDistance + 5) * (float)t);
         }
-    }
-
-    private void OnHitboxEntered(Area2D area)
-    {
-        if (area.Name != "PadHitbox")
-        {
-            if (area.Name == "KillzoneHitbox")
-            {
-                KeyHit?.Invoke("Miss", 0);
-                PlayerData.NumMisses++;
-            }
-    
-            this.QueueFree();
-            return;
-        }
-
-        Vector2 posDifference = (this.GlobalPosition - area.GlobalPosition).Abs();
-        if (posDifference.X < 10 && posDifference.Y < 10)
-        {
-            KeyHit?.Invoke("Perfect!", GameData.PerfectHitValue);
-            PlayerData.NumPerfects++;
-        }
-        else if (posDifference.X < 20 && posDifference.Y < 20)
-        {
-            KeyHit?.Invoke("Great!", GameData.GreatHitValue);
-            PlayerData.NumGreats++;
-        }
-        else if (posDifference.X < 40 && posDifference.Y < 40)
-        {
-            KeyHit?.Invoke("Good!", GameData.GoodHitValue);
-            PlayerData.NumGoods++;
-        }
-        else
-        {
-            KeyHit?.Invoke("Okay", GameData.OkayHitValue);
-            PlayerData.NumOkays++;
-        }
-        this.QueueFree();
     }
 }

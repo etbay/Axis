@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="2_ul5r0"]
 [ext_resource type="Script" uid="uid://duu88pxoiea16" path="res://scripts/ui/LoadSceneButton.cs" id="3_gqipl"]
-[ext_resource type="Script" uid="uid://rmbn854xjy75" path="res://scenes/levels/LevelHighScoreLabel.cs" id="4_t5vxw"]
+[ext_resource type="Script" uid="uid://rmbn854xjy75" path="res://scripts/ui/LevelHighScoreLabel.cs" id="4_t5vxw"]
 [ext_resource type="PackedScene" uid="uid://4eu3yj7t2hl8" path="res://scenes/levels/level_one.tscn" id="4_ul5r0"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_j37a6"]

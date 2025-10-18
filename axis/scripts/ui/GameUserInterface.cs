@@ -14,15 +14,9 @@ public partial class GameUserInterface : Control
         this.points = GetChild<Label>(1);
         this.points.Text = "0";
         this.hitRating.Modulate = Color.Color8(255, 255, 255, 0);
-        Key.KeyHit += OnKeyHit;
     }
 
-    public override void _ExitTree()
-    {
-        Key.KeyHit -= OnKeyHit;
-    }
-
-    private void OnKeyHit(string text, int pointValue)
+    public void OnKeyHit(string text, int pointValue)
     {
         if (fadeOut != null && fadeOut.IsRunning())
             fadeOut?.Kill();

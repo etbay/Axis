@@ -14,9 +14,13 @@ public partial class PlayerController : Node2D
     private Pad downPad;
     private Pad leftPad;
     private Pad rightPad;
+    private Killzone killzone;
 
     public override void _Ready()
     {
+        Killzone.KeyHit += ShowHitRating;
+        Pad.KeyHit += ShowHitRating;
+
         // LR pads must be first child
         leftRightPads = GetChild<Node2D>(0);
         leftPad = leftRightPads.GetChild<Pad>(0);
@@ -25,6 +29,8 @@ public partial class PlayerController : Node2D
         upDownPads = GetChild<Node2D>(1);
         upPad = upDownPads.GetChild<Pad>(0);
         downPad = upDownPads.GetChild<Pad>(1);
+
+        killzone = GetChild<Killzone>(2);
 
         movementDistance = GameData.KeyOffsetDistance;
         maxDistance = movementDistance * numMovementsAllowed;
@@ -84,7 +90,7 @@ public partial class PlayerController : Node2D
             }
         }
     }
-    
+
     private void SelectPads()
     {
         if (Input.IsActionJustPressed("press_pad_up"))
@@ -110,5 +116,10 @@ public partial class PlayerController : Node2D
             _ = rightPad.Activate();
             //_ = rightPad.ChangeColor(GameData.RightColor);
         }
+    }
+    
+    private void ShowHitRating(string rating, int points)
+    {
+        GetChild<GameUserInterface>(3).OnKeyHit(rating, points);
     }
 }
