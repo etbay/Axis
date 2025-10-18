@@ -4,6 +4,7 @@ using System;
 public partial class Key : Node2D
 {
     public static Action<string, int> KeyHit;
+    public event Action<Key> KeyDestroyed;
     public static bool IsInLevel;
     public enum KeyDirection
     {
@@ -81,6 +82,7 @@ public partial class Key : Node2D
                 this.light.Color = GameData.LeftColor;
                 break;
         }
+        this.color.A = 0.5f;
 
         Vector2 spawnDirection = this.SpawnPosition.Normalized().Abs();
         // offsets key spawn depending on the direction it is coming from
@@ -119,6 +121,18 @@ public partial class Key : Node2D
         {
             MoveLevelKey();
         }
+    }
+
+    public override void _ExitTree()
+    {
+        KeyDestroyed?.Invoke(this);
+    }
+
+    public void Highlight()
+    {
+        Color newColor = this.sprite.Modulate;
+        newColor.A = 1.0f;
+        this.sprite.Modulate = newColor;
     }
 
     private void MoveLevelKey()

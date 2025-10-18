@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 
 public partial class KeyGenerator : Node2D
 {
@@ -20,6 +21,7 @@ public partial class KeyGenerator : Node2D
     /// and with Item2 referring to the index of KeyDirections and keyOffsets corresponding to the key.
     /// </summary>
     private Queue<Tuple<int, int>> keySpawnQueue = new Queue<Tuple<int, int>>();
+    private Queue<Key> keySpawnOrder = new Queue<Key>();
 
     public override void _Ready()
     {
@@ -44,9 +46,12 @@ public partial class KeyGenerator : Node2D
 
                 k.SetData(keyDirections[index], keyOffsets[index]);
                 k.SpawnTimeMs = songTimeMs;
+                this.keySpawnOrder.Enqueue(k);
+                k.KeyDestroyed += OnKeyDestroy;
             }
 
             this.AddChild(key);
+            HighlightClosestKey();
         }
         else if (keySpawnQueue.Count == 0 && !isLevelDone && !song.Playing)
         {
@@ -62,6 +67,20 @@ public partial class KeyGenerator : Node2D
             }
             PlayerData.SaveData();
             _ = LoadLevelSummary();
+        }
+    }
+
+    private void OnKeyDestroy(Key _)
+    {
+        this.keySpawnOrder.Dequeue();
+        HighlightClosestKey();
+    }
+
+    private void HighlightClosestKey()
+    {
+        if (this.keySpawnOrder.Count > 0)
+        {
+            this.keySpawnOrder.Peek().Highlight();
         }
     }
 
