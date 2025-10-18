@@ -136,7 +136,7 @@ public partial class Key : Area2D
     {
         if (GetParent() is KeyGenerator generator)
         {
-            double songTimeMs = generator.song.GetPlaybackPosition() * 1000.0;
+            double songTimeMs = generator.SongPlaybackPosition;
             double t = (songTimeMs - SpawnTimeMs) / travelTimeMs;
             this.Position = this.spawnPosition + (this.direction * (GameData.KeyTravelDistance + 5) * (float)t);
         }

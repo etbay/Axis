@@ -15,6 +15,7 @@ public partial class Killzone : Area2D
         if (area is Key key)
         {
             KeyHit?.Invoke("Miss", 0);
+            PlayerData.NumMisses++;
             key.QueueFree();
         }
     }

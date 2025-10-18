@@ -26,6 +26,5 @@ public static class GameData
         MainMenu = (PackedScene)ResourceLoader.Load("res://scenes/levels/main_menu.tscn");
         LevelSummary = (PackedScene)ResourceLoader.Load("res://scenes/levels/level_summary.tscn");
         EndlessMode = (PackedScene)ResourceLoader.Load("res://scenes/levels/endless_mode.tscn");
-        
     }
 }

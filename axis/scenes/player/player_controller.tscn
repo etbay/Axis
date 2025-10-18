@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ctt7h8rb4fv2j" path="res://scripts/player/PlayerController.cs" id="1_lvefo"]
 [ext_resource type="PackedScene" uid="uid://uradp5x5kbux" path="res://scenes/player/pad.tscn" id="2_0cfoe"]
 [ext_resource type="Script" uid="uid://c4k0nj3o6c3ra" path="res://scripts/ui/GameUserInterface.cs" id="3_0cfoe"]
-[ext_resource type="Script" uid="uid://cnlr8o0m62x32" path="res://scenes/player/Killzone.cs" id="3_0nonk"]
+[ext_resource type="Script" uid="uid://cnlr8o0m62x32" path="res://scripts/player/Killzone.cs" id="3_0nonk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iivv4"]
 
@@ -40,6 +40,7 @@ position = Vector2(0, 100)
 padColor = Color(1, 0, 1, 0.5882353)
 
 [node name="Killzone" type="Area2D" parent="."]
+position = Vector2(0, -2)
 script = ExtResource("3_0nonk")
 
 [node name="Hitbox" type="CollisionShape2D" parent="Killzone"]

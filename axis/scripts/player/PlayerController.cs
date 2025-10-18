@@ -38,6 +38,12 @@ public partial class PlayerController : Node2D
         maxDistance = movementDistance * numMovementsAllowed;
     }
 
+    public override void _ExitTree()
+    {
+        Killzone.KeyHit -= ShowHitRating;
+        Pad.KeyHit -= ShowHitRating;
+    }
+
     public override void _PhysicsProcess(double delta)
     {
         MovePads();
@@ -99,52 +105,29 @@ public partial class PlayerController : Node2D
         {
             _ = upPad.Activate();
             //_ = upPad.ChangeColor(GameData.UpColor);
-            CheckForHit();
         }
 
         if (Input.IsActionJustPressed("press_pad_down"))
         {
             _ = downPad.Activate();
             //_ = downPad.ChangeColor(GameData.DownColor);
-            CheckForHit();
         }
 
         if (Input.IsActionJustPressed("press_pad_left"))
         {
             _ = leftPad.Activate();
             //_ = leftPad.ChangeColor(GameData.LeftColor);
-            CheckForHit();
         }
 
         if (Input.IsActionJustPressed("press_pad_right"))
         {
             _ = rightPad.Activate();
             //_ = rightPad.ChangeColor(GameData.RightColor);
-            CheckForHit();
-        }
-    }
-
-    private void CheckForHit()
-    {
-        if (!keyJustHit)
-        {
-            if (PlayerData.TotalScore >= GameData.GoodHitValue)
-            {
-                PlayerData.TotalScore -= GameData.GoodHitValue;
-            }
         }
     }
 
     private void ShowHitRating(string rating, int points)
     {
         GetChild<GameUserInterface>(3).OnKeyHit(rating, points);
-        _ = KeyHit();
-    }
-
-    private async Task KeyHit()
-    {
-        keyJustHit = true;
-        await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
-        keyJustHit = false;
     }
 }

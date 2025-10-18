@@ -7,12 +7,15 @@ using System.Windows.Markup;
 
 public partial class KeyGenerator : Node2D
 {
-    [Export] private PackedScene KeyScene;
+    public event Action LevelEnd;
+    public AudioStreamPlayer2D Song { private get; set; }
+    public double SongPlaybackPosition { get; private set; }
+
     [Export] private Godot.Collections.Array<int> keySpawnTimeMs;
     [Export] private Godot.Collections.Array<Key.KeyDirection> keyDirections;
     [Export] private Godot.Collections.Array<Key.KeyOffset> keyOffsets;
-    [Export] public AudioStreamPlayer2D song;
-    [Export] private int levelIndex;
+    [Export] private int levelIndex;    // get rid of this
+    private PackedScene KeyScene = GD.Load<PackedScene>("res://scenes/key.tscn");
     private int startTime;
     private bool isLevelDone = false;
 
@@ -34,40 +37,36 @@ public partial class KeyGenerator : Node2D
 
     public override void _Process(double delta)
     {
-        double songTimeMs = song.GetPlaybackPosition() * 1000.0;
+        SongPlaybackPosition = Song.GetPlaybackPosition() * 1000.0;
 
-        if (keySpawnQueue.Count > 0 && songTimeMs >= keySpawnQueue.Peek().Item1 * 100 - 1680)
+        if (keySpawnQueue.Count > 0 && SongPlaybackPosition >= keySpawnQueue.Peek().Item1 * 100 - 1680)
         {
-            var key = KeyScene.Instantiate();
-
-            if (key is Key k)
-            {
-                int index = keySpawnQueue.Dequeue().Item2;
-
-                k.SetData(keyDirections[index], keyOffsets[index]);
-                k.SpawnTimeMs = songTimeMs;
-                this.keySpawnOrder.Add(k);
-                k.KeyDestroyed += OnKeyDestroy;
-            }
-
-            this.AddChild(key);
-            HighlightClosestKey();
+            SpawnKey();
         }
-        else if (keySpawnQueue.Count == 0 && !isLevelDone && !song.Playing)
+        else if (keySpawnQueue.Count == 0 && !isLevelDone && !Song.Playing)
         {
             isLevelDone = true;
-            if (PlayerData.LevelScores.ContainsKey(levelIndex)
-                && PlayerData.LevelScores[levelIndex] < PlayerData.TotalScore)
-            {
-                PlayerData.LevelScores[levelIndex] = PlayerData.TotalScore;
-            }
-            else if (!PlayerData.LevelScores.ContainsKey(levelIndex))
-            {
-                PlayerData.LevelScores[levelIndex] = PlayerData.TotalScore;
-            }
-            PlayerData.SaveData();
-            _ = LoadLevelSummary();
+            this.LevelEnd?.Invoke();
+            _ = EndLevel();
         }
+    }
+
+    private void SpawnKey()
+    {
+        Node key = KeyScene.Instantiate();
+
+        if (key is Key k)
+        {
+            int index = keySpawnQueue.Dequeue().Item2;
+
+            k.SetData(keyDirections[index], keyOffsets[index]);
+            k.SpawnTimeMs = SongPlaybackPosition;
+            this.keySpawnOrder.Add(k);
+            k.KeyDestroyed += OnKeyDestroy;
+        }
+
+        this.AddChild(key);
+        HighlightClosestKey();
     }
 
     private void OnKeyDestroy(Key key)
@@ -84,7 +83,7 @@ public partial class KeyGenerator : Node2D
         }
     }
 
-    private async Task LoadLevelSummary()
+    private async Task EndLevel()
     {
         await ToSignal(GetTree().CreateTimer(3.0f), "timeout");
         GetTree().ChangeSceneToPacked(GameData.LevelSummary);
