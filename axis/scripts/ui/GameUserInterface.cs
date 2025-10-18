@@ -4,30 +4,39 @@ using System.Threading.Tasks;
 
 public partial class GameUserInterface : Control
 {
-    private Tween fadeOut;
-    private Label hitRating;
-    private Label points;
+    private Tween fadeOutTween;
+    private Label hitRatingLabel;
+    private Label pointsLabel;
 
     public override void _Ready()
     {
-        this.hitRating = GetChild<Label>(0);
-        this.points = GetChild<Label>(1);
-        this.points.Text = "0";
-        this.hitRating.Modulate = Color.Color8(255, 255, 255, 0);
+        this.hitRatingLabel = GetChild<Label>(0);
+        this.pointsLabel = GetChild<Label>(1);
+        this.pointsLabel.Text = "0";
+        this.hitRatingLabel.Modulate = Color.Color8(255, 255, 255, 0);
+        PlayerData.TotalScoreChanged += UpdateScore;
+    }
+
+    public override void _ExitTree()
+    {
+        PlayerData.TotalScoreChanged -= UpdateScore;
     }
 
     public void OnKeyHit(string text, int pointValue)
     {
-        if (fadeOut != null && fadeOut.IsRunning())
-            fadeOut?.Kill();
+        if (fadeOutTween != null && fadeOutTween.IsRunning())
+            fadeOutTween?.Kill();
 
-        this.hitRating.Text = text;
-        this.points.Text = (int.Parse(this.points.Text) + pointValue).ToString();
-        PlayerData.TotalScore = int.Parse(this.points.Text);
-        this.hitRating.Modulate = Color.Color8(255, 255, 255, 255);
+        this.hitRatingLabel.Text = text;
+        PlayerData.TotalScore += pointValue;
+        this.hitRatingLabel.Modulate = Color.Color8(255, 255, 255, 255);
 
-        fadeOut = CreateTween();
-        fadeOut.TweenProperty(this.hitRating, "modulate:a", 0f, 1);
-        fadeOut.Play();
+        fadeOutTween = CreateTween();
+        fadeOutTween.TweenProperty(this.hitRatingLabel, "modulate:a", 0f, 1);
+        fadeOutTween.Play();
+    }
+    private void UpdateScore(int score)
+    {
+        this.pointsLabel.Text = score.ToString();
     }
 }

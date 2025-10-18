@@ -5,12 +5,26 @@ using System.Text.Json;
 
 public static class PlayerData
 {
+    public static event Action<int> TotalScoreChanged;
     public static int NumPerfects { get; set; } = 0;
     public static int NumGreats { get; set; } = 0;
     public static int NumGoods { get; set; } = 0;
     public static int NumOkays { get; set; } = 0;
     public static int NumMisses { get; set; } = 0;
-    public static int TotalScore { get; set; } = 0;
+    private static int totalScore = 0;
+    public static int TotalScore
+    {
+        get
+        {
+            return totalScore;
+        }
+        
+        set
+        {
+            totalScore = value;
+            TotalScoreChanged?.Invoke(totalScore);
+        } 
+    }
 
     public static Dictionary<int, int> LevelScores { get; set; } = new Dictionary<int, int>();
     public static Dictionary<int, int> EndlessScores { get; set; } = new Dictionary<int, int>();
