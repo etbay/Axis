@@ -2,9 +2,8 @@ using Godot;
 using System;
 using System.Runtime.Serialization;
 
-public partial class RandomKeyGenerator : Node
+public partial class RandomKeyGenerator : KeyGenerator
 {
-    private PackedScene KeyScene;
     private int lastTime;
     private Random random;
     private int startTime = -1;
@@ -15,7 +14,6 @@ public partial class RandomKeyGenerator : Node
         SpeedSelectionButton.SpeedSelected += StartGeneration;
         this.SetProcess(false);
         this.random = new Random();
-        this.KeyScene = (PackedScene)ResourceLoader.Load("res://scenes/key.tscn");
     }
 
     public override void _ExitTree()
@@ -33,21 +31,13 @@ public partial class RandomKeyGenerator : Node
         if (currentTime - startTime >= 3000 && currentTime - this.lastTime >= intervalMs)
         {
             this.lastTime = currentTime;
-            GenerateKey();
+            this.SpawnKeyRandom();
         }
 
-        if (PlayerData.NumMisses >= 3)
+        if (PlayerData.NumMisses >= 3 && !isLevelDone)
         {
-            if (PlayerData.EndlessScores.ContainsKey(GameData.KeySpeed)
-                && PlayerData.EndlessScores[GameData.KeySpeed] < PlayerData.TotalScore)
-            {
-                PlayerData.EndlessScores[GameData.KeySpeed] = PlayerData.TotalScore;
-            }
-            else if (!PlayerData.EndlessScores.ContainsKey(GameData.KeySpeed))
-            {
-                PlayerData.EndlessScores[GameData.KeySpeed] = PlayerData.TotalScore;
-            }
-            GetTree().ChangeSceneToPacked(GameData.LevelSummary);
+            this.isLevelDone = true;
+            _ = this.EndLevel();
         }
     }
 
@@ -80,7 +70,7 @@ public partial class RandomKeyGenerator : Node
         this.SetProcess(true);
     }
 
-    private void GenerateKey()
+    private void SpawnKeyRandom()
     {
         var key = KeyScene.Instantiate();
 
@@ -90,8 +80,11 @@ public partial class RandomKeyGenerator : Node
             var keyOffsetValues = Enum.GetValues(typeof(Key.KeyOffset));
             k.SetData((Key.KeyDirection)keyDirectionValues.GetValue(random.Next(keyDirectionValues.Length)),
                 (Key.KeyOffset)keyOffsetValues.GetValue(random.Next(keyOffsetValues.Length)));
+            this.keySpawnOrder.Add(k);
+            k.KeyDestroyed += this.OnKeyDestroy;
         }
 
         this.AddChild(key);
+        this.HighlightClosestKey();
     }
 }

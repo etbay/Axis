@@ -28,11 +28,14 @@ public partial class Pad : Area2D
         this.hitbox.Disabled = true;
     }
 
-    public async Task ChangeColor(Color color)
+    public async Task HighlightPad()
     {
-        this.sprite.Modulate = color;
+        Color newColor = this.sprite.Modulate;
+        newColor.A = 1.0f;
+        this.sprite.Modulate = newColor;
         await ToSignal(GetTree().CreateTimer(0.05f), "timeout");
-        this.sprite.Modulate = Color.Color8(255, 255, 255, 255);
+        newColor.A = 0.6f;
+        this.sprite.Modulate = newColor;
     }
 
     private void OnHitboxEntered(Area2D area)

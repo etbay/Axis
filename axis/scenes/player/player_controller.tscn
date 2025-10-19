@@ -22,22 +22,22 @@ script = ExtResource("1_lvefo")
 [node name="LeftPad" parent="LRPads" instance=ExtResource("2_0cfoe")]
 position = Vector2(-100, 0)
 rotation = 1.5707964
-padColor = Color(0, 0.99607843, 0, 0.5882353)
+padColor = Color(0, 0.99607843, 0, 0.6)
 
 [node name="RightPad" parent="LRPads" instance=ExtResource("2_0cfoe")]
 position = Vector2(100, 0)
 rotation = 1.5707964
-padColor = Color(1, 0.64705884, 0, 0.5882353)
+padColor = Color(1, 0.64705884, 0, 0.6)
 
 [node name="TBPads" type="Node2D" parent="."]
 
 [node name="TopPad" parent="TBPads" instance=ExtResource("2_0cfoe")]
 position = Vector2(0, -100)
-padColor = Color(0, 1, 1, 0.5882353)
+padColor = Color(0, 1, 1, 0.6)
 
 [node name="BottomPad" parent="TBPads" instance=ExtResource("2_0cfoe")]
 position = Vector2(0, 100)
-padColor = Color(1, 0, 1, 0.5882353)
+padColor = Color(1, 0, 1, 0.6)
 
 [node name="Killzone" type="Area2D" parent="."]
 position = Vector2(0, -2)

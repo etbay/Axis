@@ -14,21 +14,18 @@ public partial class KeyGenerator : Node2D
     [Export] private Godot.Collections.Array<int> keySpawnTimeMs;
     [Export] private Godot.Collections.Array<Key.KeyDirection> keyDirections;
     [Export] private Godot.Collections.Array<Key.KeyOffset> keyOffsets;
-    [Export] private int levelIndex;    // get rid of this
-    private PackedScene KeyScene = GD.Load<PackedScene>("res://scenes/key.tscn");
-    private int startTime;
-    private bool isLevelDone = false;
+    protected PackedScene KeyScene = GD.Load<PackedScene>("res://scenes/key.tscn");
+    protected bool isLevelDone = false;
 
     /// <summary>
     /// Queue that contains a tuple with Item1 referring to the seconds it should take to spawn
     /// and with Item2 referring to the index of KeyDirections and keyOffsets corresponding to the key.
     /// </summary>
     private Queue<Tuple<int, int>> keySpawnQueue = new Queue<Tuple<int, int>>();
-    private List<Key> keySpawnOrder = new List<Key>();
+    protected List<Key> keySpawnOrder = new List<Key>();
 
     public override void _Ready()
     {
-        startTime = (int)Time.GetTicksMsec();
         for (int i = 0; i < keySpawnTimeMs.Count; i++)
         {
             keySpawnQueue.Enqueue(new Tuple<int, int>(keySpawnTimeMs[i], i));
@@ -37,45 +34,44 @@ public partial class KeyGenerator : Node2D
 
     public override void _Process(double delta)
     {
-        SongPlaybackPosition = Song.GetPlaybackPosition() * 1000.0;
+        this.SongPlaybackPosition = this.Song.GetPlaybackPosition() * 1000.0;
 
-        if (keySpawnQueue.Count > 0 && SongPlaybackPosition >= keySpawnQueue.Peek().Item1 * 100 - 1680)
+        if (this.keySpawnQueue.Count > 0 && this.SongPlaybackPosition >= this.keySpawnQueue.Peek().Item1 * 100 - 1680)
         {
-            SpawnKey();
+            this.SpawnKey();
         }
-        else if (keySpawnQueue.Count == 0 && !isLevelDone && !Song.Playing)
+        else if (this.keySpawnQueue.Count == 0 && !this.isLevelDone && !this.Song.Playing)
         {
-            isLevelDone = true;
-            this.LevelEnd?.Invoke();
-            _ = EndLevel();
+            this.isLevelDone = true;
+            _ = this.EndLevel();
         }
     }
 
-    private void SpawnKey()
+    protected void SpawnKey()
     {
-        Node key = KeyScene.Instantiate();
+        Node key = this.KeyScene.Instantiate();
 
         if (key is Key k)
         {
-            int index = keySpawnQueue.Dequeue().Item2;
+            int index = this.keySpawnQueue.Dequeue().Item2;
 
-            k.SetData(keyDirections[index], keyOffsets[index]);
-            k.SpawnTimeMs = SongPlaybackPosition;
+            k.SetData(this.keyDirections[index], this.keyOffsets[index]);
+            k.SpawnTimeMs = this.SongPlaybackPosition;
             this.keySpawnOrder.Add(k);
-            k.KeyDestroyed += OnKeyDestroy;
+            k.KeyDestroyed += this.OnKeyDestroy;
         }
 
         this.AddChild(key);
-        HighlightClosestKey();
+        this.HighlightClosestKey();
     }
 
-    private void OnKeyDestroy(Key key)
+    protected void OnKeyDestroy(Key key)
     {
         this.keySpawnOrder.Remove(key);
-        HighlightClosestKey();
+        this.HighlightClosestKey();
     }
 
-    private void HighlightClosestKey()
+    protected void HighlightClosestKey()
     {
         if (this.keySpawnOrder.Count > 0)
         {
@@ -83,8 +79,9 @@ public partial class KeyGenerator : Node2D
         }
     }
 
-    private async Task EndLevel()
+    protected async Task EndLevel()
     {
+        this.LevelEnd?.Invoke();
         await ToSignal(GetTree().CreateTimer(3.0f), "timeout");
         GetTree().ChangeSceneToPacked(GameData.LevelSummary);
     }

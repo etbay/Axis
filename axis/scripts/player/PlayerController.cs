@@ -104,25 +104,25 @@ public partial class PlayerController : Node2D
         if (Input.IsActionJustPressed("press_pad_up"))
         {
             _ = upPad.Activate();
-            //_ = upPad.ChangeColor(GameData.UpColor);
+            _ = upPad.HighlightPad();
         }
 
         if (Input.IsActionJustPressed("press_pad_down"))
         {
             _ = downPad.Activate();
-            //_ = downPad.ChangeColor(GameData.DownColor);
+            _ = downPad.HighlightPad();
         }
 
         if (Input.IsActionJustPressed("press_pad_left"))
         {
             _ = leftPad.Activate();
-            //_ = leftPad.ChangeColor(GameData.LeftColor);
+            _ = leftPad.HighlightPad();
         }
 
         if (Input.IsActionJustPressed("press_pad_right"))
         {
             _ = rightPad.Activate();
-            //_ = rightPad.ChangeColor(GameData.RightColor);
+            _ = rightPad.HighlightPad();
         }
     }
 

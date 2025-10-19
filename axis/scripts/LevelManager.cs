@@ -13,13 +13,23 @@ public partial class LevelManager : GameManager
 
     public override void _Ready()
     {
-        base._Ready();
-        keyGenerator = GetChild<KeyGenerator>(1);
-        keyGenerator.LevelEnd += UpdatePlayerData;
-        keyGenerator.Song = this.song;
+        base._Ready();  // init GameData (for debug mode)
+        this.keyGenerator = GetChild<KeyGenerator>(1);
+        this.keyGenerator.LevelEnd += this.UpdatePlayerData;
+        this.keyGenerator.Song = this.song;
         Key.IsInLevel = true;
         GameData.KeySpeed = this.levelKeySpeed;
         this.startTime = (int)Time.GetTicksMsec();
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);   // detects esc
+        if (!isSongPlaying && ((int)Time.GetTicksMsec() - startTime) / 1000 >= secondsToWait)
+        {
+            song.Play();
+            isSongPlaying = true;
+        }
     }
 
     private void UpdatePlayerData()
@@ -35,15 +45,4 @@ public partial class LevelManager : GameManager
         }
         PlayerData.SaveData();
     }
-
-
-    public override void _Process(double delta)
-    {
-        if (!isSongPlaying && ((int)Time.GetTicksMsec() - startTime) / 1000 >= secondsToWait)
-        {
-            song.Play();
-            isSongPlaying = true;
-        }
-    }
-
 }
