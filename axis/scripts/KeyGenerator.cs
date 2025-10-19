@@ -47,7 +47,7 @@ public partial class KeyGenerator : Node2D
         }
     }
 
-    protected void SpawnKey()
+    protected virtual void SpawnKey()
     {
         Node key = this.KeyScene.Instantiate();
 
@@ -81,8 +81,13 @@ public partial class KeyGenerator : Node2D
 
     protected async Task EndLevel()
     {
-        this.LevelEnd?.Invoke();
+        EmitLevelEnd();
         await ToSignal(GetTree().CreateTimer(3.0f), "timeout");
         GetTree().ChangeSceneToPacked(GameData.LevelSummary);
+    }
+
+    protected void EmitLevelEnd()
+    {
+        this.LevelEnd?.Invoke();
     }
 }

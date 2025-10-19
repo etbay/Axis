@@ -36,6 +36,7 @@ public static class PlayerData
         NumGoods = 0;
         NumOkays = 0;
         NumMisses = 0;
+        totalScore = 0;
     }
 
     public static void ResetSaveData()

@@ -31,14 +31,38 @@ public partial class RandomKeyGenerator : KeyGenerator
         if (currentTime - startTime >= 3000 && currentTime - this.lastTime >= intervalMs)
         {
             this.lastTime = currentTime;
-            this.SpawnKeyRandom();
+            this.SpawnKey();
         }
 
         if (PlayerData.NumMisses >= 3 && !isLevelDone)
         {
             this.isLevelDone = true;
-            _ = this.EndLevel();
+            this.EndLevel();
         }
+    }
+
+    protected override void SpawnKey()
+    {
+        var key = KeyScene.Instantiate();
+
+        if (key is Key k)
+        {
+            var keyDirectionValues = Enum.GetValues(typeof(Key.KeyDirection));
+            var keyOffsetValues = Enum.GetValues(typeof(Key.KeyOffset));
+            k.SetData((Key.KeyDirection)keyDirectionValues.GetValue(random.Next(keyDirectionValues.Length)),
+                (Key.KeyOffset)keyOffsetValues.GetValue(random.Next(keyOffsetValues.Length)));
+            this.keySpawnOrder.Add(k);
+            k.KeyDestroyed += this.OnKeyDestroy;
+        }
+
+        this.AddChild(key);
+        this.HighlightClosestKey();
+    }
+
+    private new void EndLevel()
+    {
+        this.EmitLevelEnd();
+        GetTree().ChangeSceneToPacked(GameData.LevelSummary);
     }
 
     private void StartGeneration()
@@ -68,23 +92,5 @@ public partial class RandomKeyGenerator : KeyGenerator
                 break;
         }
         this.SetProcess(true);
-    }
-
-    private void SpawnKeyRandom()
-    {
-        var key = KeyScene.Instantiate();
-
-        if (key is Key k)
-        {
-            var keyDirectionValues = Enum.GetValues(typeof(Key.KeyDirection));
-            var keyOffsetValues = Enum.GetValues(typeof(Key.KeyOffset));
-            k.SetData((Key.KeyDirection)keyDirectionValues.GetValue(random.Next(keyDirectionValues.Length)),
-                (Key.KeyOffset)keyOffsetValues.GetValue(random.Next(keyOffsetValues.Length)));
-            this.keySpawnOrder.Add(k);
-            k.KeyDestroyed += this.OnKeyDestroy;
-        }
-
-        this.AddChild(key);
-        this.HighlightClosestKey();
     }
 }
