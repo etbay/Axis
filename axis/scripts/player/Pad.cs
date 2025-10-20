@@ -16,8 +16,8 @@ public partial class Pad : Area2D
     public override void _Ready()
     {
         this.AreaEntered += OnHitboxEntered;
-        this.hitbox = GetChild<CollisionShape2D>(0);
-        this.sprite = GetChild<Sprite2D>(1);
+        this.hitbox = GetNode<CollisionShape2D>("Hitbox");
+        this.sprite = GetNode<Sprite2D>("Sprite");
         this.sprite.Modulate = padColor;
     }
 

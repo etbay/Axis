@@ -11,9 +11,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sqr8q")
-numHitRatings = NodePath("Stats/NumHitRatings")
-hitRatingScores = NodePath("Stats/HitRatingScores")
-totalScore = NodePath("TotalScore")
+numHitRatings = NodePath("Stats/NumHitRatingsLabel")
+hitRatingScores = NodePath("Stats/HitRatingScoresLabel")
+totalScore = NodePath("TotalScoreLabel")
 
 [node name="Stats" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -30,7 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="HitRatings" type="Label" parent="Stats"]
+[node name="HitRatingsLabel" type="Label" parent="Stats"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -40,7 +40,7 @@ Good:
 Okay:
 Miss:"
 
-[node name="NumHitRatings" type="Label" parent="Stats"]
+[node name="NumHitRatingsLabel" type="Label" parent="Stats"]
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -50,7 +50,7 @@ x4
 x5
 x6"
 
-[node name="HitRatingScores" type="Label" parent="Stats"]
+[node name="HitRatingScoresLabel" type="Label" parent="Stats"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "1000
@@ -59,7 +59,7 @@ text = "1000
 75
 0"
 
-[node name="TotalScore" type="Label" parent="."]
+[node name="TotalScoreLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

@@ -24,15 +24,15 @@ public partial class PlayerController : Node2D
         Pad.KeyHit += ShowHitRating;
 
         // LR pads must be first child
-        leftRightPads = GetChild<Node2D>(0);
-        leftPad = leftRightPads.GetChild<Pad>(0);
-        rightPad = leftRightPads.GetChild<Pad>(1);
+        leftRightPads = GetNode<Node2D>("LRPads");
+        leftPad = GetNode<Pad>("LRPads/LeftPad");
+        rightPad = GetNode<Pad>("LRPads/RightPad");
         // TB pads must be second child
-        upDownPads = GetChild<Node2D>(1);
-        upPad = upDownPads.GetChild<Pad>(0);
-        downPad = upDownPads.GetChild<Pad>(1);
+        upDownPads = GetNode<Node2D>("TBPads");
+        upPad = GetNode<Pad>("TBPads/TopPad");
+        downPad = GetNode<Pad>("TBPads/BottomPad");
 
-        killzone = GetChild<Killzone>(2);
+        killzone = GetNode<Killzone>("Killzone");
 
         movementDistance = GameData.KeyOffsetDistance;
         maxDistance = movementDistance * numMovementsAllowed;

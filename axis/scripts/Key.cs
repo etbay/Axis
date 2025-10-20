@@ -101,8 +101,8 @@ public partial class Key : Area2D
 
     public override void _Ready()
     {
-        this.sprite = GetChild<Sprite2D>(0);
-        this.light = GetChild<PointLight2D>(1);
+        this.sprite = GetNode<Sprite2D>("Sprite");
+        this.light = GetNode<PointLight2D>("PointLight");
         this.sprite.Modulate = this.color;
         this.Position = this.SpawnPosition;
         this.speed = GameData.KeySpeed;

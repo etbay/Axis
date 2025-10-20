@@ -10,8 +10,8 @@ public partial class GameUserInterface : Control
 
     public override void _Ready()
     {
-        this.hitRatingLabel = GetChild<Label>(0);
-        this.pointsLabel = GetChild<Label>(1);
+        this.hitRatingLabel = GetNode<Label>("HitRatingLabel");
+        this.pointsLabel = GetNode<Label>("PointsLabel");
         this.pointsLabel.Text = "0";
         this.hitRatingLabel.Modulate = Color.Color8(255, 255, 255, 0);
         PlayerData.TotalScoreChanged += UpdateScore;
