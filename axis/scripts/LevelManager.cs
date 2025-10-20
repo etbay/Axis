@@ -14,7 +14,7 @@ public partial class LevelManager : GameManager
     public override void _Ready()
     {
         base._Ready();  // init GameData (for debug mode)
-        this.keyGenerator = GetChild<KeyGenerator>(1);
+        this.keyGenerator = GetNode<KeyGenerator>("KeyGenerator");
         this.keyGenerator.LevelEnd += this.UpdatePlayerData;
         this.keyGenerator.Song = this.song;
         Key.IsInLevel = true;

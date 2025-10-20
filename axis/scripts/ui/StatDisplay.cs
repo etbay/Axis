@@ -3,21 +3,25 @@ using System;
 
 public partial class StatDisplay : Control
 {
-    [Export] private Label numHitRatings;
-    [Export] private Label hitRatingScores;
-    [Export] private Label totalScore;
+    private Label numHitRatingsLabel;
+    private Label hitRatingScoresLabel;
+    private Label totalScoreLabel;
 
     public override void _Ready()
     {
+        this.numHitRatingsLabel = GetNode<Label>("Stats/NumHitRatingsLabel");
+        this.hitRatingScoresLabel = GetNode<Label>("Stats/HitRatingScoresLabel");
+        this.totalScoreLabel = GetNode<Label>("TotalScoreLabel");
+
         SaveGame();
 
-        this.numHitRatings.Text = "x" + PlayerData.NumPerfects + "\nx" + PlayerData.NumGreats + "\nx" + PlayerData.NumGoods
+        this.numHitRatingsLabel.Text = "x" + PlayerData.NumPerfects + "\nx" + PlayerData.NumGreats + "\nx" + PlayerData.NumGoods
             + "\nx" + PlayerData.NumOkays + "\nx" + PlayerData.NumMisses;
-        this.hitRatingScores.Text = (PlayerData.NumPerfects * GameData.PerfectHitValue).ToString() + "\n"
+        this.hitRatingScoresLabel.Text = (PlayerData.NumPerfects * GameData.PerfectHitValue).ToString() + "\n"
             + (PlayerData.NumGreats * GameData.GreatHitValue).ToString() + "\n"
             + (PlayerData.NumGoods * GameData.GoodHitValue).ToString() + "\n"
             + (PlayerData.NumOkays * GameData.OkayHitValue).ToString() + "\n0";
-        this.totalScore.Text = "Total: " + (PlayerData.NumPerfects * GameData.PerfectHitValue 
+        this.totalScoreLabel.Text = "Total: " + (PlayerData.NumPerfects * GameData.PerfectHitValue 
             + PlayerData.NumGreats * GameData.GreatHitValue + PlayerData.NumGoods * GameData.GoodHitValue
             + PlayerData.NumOkays * GameData.OkayHitValue).ToString();
     }

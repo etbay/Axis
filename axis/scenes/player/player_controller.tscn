@@ -56,7 +56,7 @@ offset_right = 350.0
 offset_bottom = 350.0
 script = ExtResource("3_0cfoe")
 
-[node name="HitFeedback" type="Label" parent="GameUI"]
+[node name="HitRatingLabel" type="Label" parent="GameUI"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -72,7 +72,7 @@ grow_vertical = 2
 text = "Great!"
 horizontal_alignment = 1
 
-[node name="Points" type="Label" parent="GameUI"]
+[node name="PointsLabel" type="Label" parent="GameUI"]
 layout_mode = 1
 offset_right = 148.0
 offset_bottom = 34.0

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c2lklp55pqm7h"]
+[gd_scene load_steps=4 format=3 uid="uid://c2lklp55pqm7h"]
 
 [ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="1_h3b85"]
 [ext_resource type="Script" uid="uid://bbby1xha4vrei" path="res://scripts/GameManager.cs" id="1_hlmtr"]
+[ext_resource type="Script" uid="uid://ct8my50l314tf" path="res://scripts/ui/VideoSettings.cs" id="2_ni6ub"]
 
 [node name="settings" type="Node2D"]
 script = ExtResource("1_hlmtr")
@@ -26,9 +27,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 24
 tab_alignment = 1
-current_tab = 0
+current_tab = 2
 
 [node name="Controls" type="Control" parent="Menu/tab_container"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -38,9 +40,34 @@ layout_mode = 2
 metadata/_tab_index = 1
 
 [node name="Video" type="Control" parent="Menu/tab_container"]
-visible = false
 layout_mode = 2
+script = ExtResource("2_ni6ub")
 metadata/_tab_index = 2
+
+[node name="Settings" type="VBoxContainer" parent="Menu/tab_container/Video"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.0
+offset_top = -33.0
+offset_right = 57.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FullscreenCheckBox" type="CheckBox" parent="Menu/tab_container/Video/Settings"]
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="ResolutionOptions" type="OptionButton" parent="Menu/tab_container/Video/Settings"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "1920x1080"
+popup/item_0/id = 0
+popup/item_1/id = 1
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -1
