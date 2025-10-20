@@ -1,15 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://cuwnmvtw5dtwr"]
+[gd_scene load_steps=7 format=3 uid="uid://cuwnmvtw5dtwr"]
 
 [ext_resource type="Script" uid="uid://duu88pxoiea16" path="res://scripts/ui/LoadSceneButton.cs" id="1_721jg"]
 [ext_resource type="Script" uid="uid://d26yeutbpbn3" path="res://scripts/GameLoader.cs" id="1_fkd6t"]
 [ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="3_fkd6t"]
 [ext_resource type="PackedScene" uid="uid://ccoky6bbpcp7x" path="res://scenes/levels/endless_mode.tscn" id="3_geflf"]
 [ext_resource type="PackedScene" uid="uid://7q3eke0mvd6p" path="res://scenes/levels/level_select.tscn" id="3_keln3"]
+[ext_resource type="PackedScene" uid="uid://c2lklp55pqm7h" path="res://scenes/levels/settings.tscn" id="5_keln3"]
 
 [node name="main_menu" type="Node2D"]
 script = ExtResource("1_fkd6t")
 
-[node name="UI" type="Control" parent="."]
+[node name="Menu" type="Control" parent="."]
 custom_minimum_size = Vector2(720, 720)
 layout_mode = 3
 anchors_preset = 15
@@ -20,41 +21,45 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PlayButton" type="Button" parent="UI"]
+[node name="Buttons" type="VBoxContainer" parent="Menu"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -122.25
-offset_top = -15.5
-offset_right = 122.25
-offset_bottom = 15.5
+offset_left = -35.0
+offset_top = -50.5
+offset_right = 35.0
+offset_bottom = 50.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="Menu/Buttons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
 text = "Play"
 script = ExtResource("1_721jg")
 scene = ExtResource("3_keln3")
 
-[node name="EndlessButton" type="Button" parent="UI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -122.25
-offset_top = 37.875
-offset_right = 122.25
-offset_bottom = 68.87509
-grow_horizontal = 2
-grow_vertical = 2
+[node name="EndlessButton" type="Button" parent="Menu/Buttons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
 text = "Endless"
 script = ExtResource("1_721jg")
 scene = ExtResource("3_geflf")
 
-[node name="Axis Horizontal Container" type="HBoxContainer" parent="UI"]
+[node name="SettingsButton" type="Button" parent="Menu/Buttons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Settings"
+script = ExtResource("1_721jg")
+scene = ExtResource("5_keln3")
+
+[node name="Axis Horizontal Container" type="HBoxContainer" parent="Menu"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -66,7 +71,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="A" type="Label" parent="UI/Axis Horizontal Container"]
+[node name="A" type="Label" parent="Menu/Axis Horizontal Container"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -75,7 +80,7 @@ theme_override_font_sizes/font_size = 80
 text = "A"
 horizontal_alignment = 1
 
-[node name="X" type="Label" parent="UI/Axis Horizontal Container"]
+[node name="X" type="Label" parent="Menu/Axis Horizontal Container"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -84,7 +89,7 @@ theme_override_font_sizes/font_size = 80
 text = "X"
 horizontal_alignment = 1
 
-[node name="I" type="Label" parent="UI/Axis Horizontal Container"]
+[node name="I" type="Label" parent="Menu/Axis Horizontal Container"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
@@ -93,7 +98,7 @@ theme_override_font_sizes/font_size = 80
 text = "I"
 horizontal_alignment = 1
 
-[node name="S" type="Label" parent="UI/Axis Horizontal Container"]
+[node name="S" type="Label" parent="Menu/Axis Horizontal Container"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1

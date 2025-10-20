@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2lklp55pqm7h"]
+
+[ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="1_h3b85"]
+[ext_resource type="Script" uid="uid://bbby1xha4vrei" path="res://scripts/GameManager.cs" id="1_hlmtr"]
+
+[node name="settings" type="Node2D"]
+script = ExtResource("1_hlmtr")
+
+[node name="Menu" type="Control" parent="."]
+custom_minimum_size = Vector2(720, 720)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="tab_container" type="TabContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+tab_alignment = 1
+current_tab = 0
+
+[node name="Controls" type="Control" parent="Menu/tab_container"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Audio" type="Control" parent="Menu/tab_container"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Video" type="Control" parent="Menu/tab_container"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+scale = Vector2(12, 12)
+texture = ExtResource("1_h3b85")
+
+[node name="Camera" type="Camera2D" parent="."]

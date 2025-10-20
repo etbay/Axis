@@ -55,7 +55,7 @@ position = Vector2(360, 360)
 scale = Vector2(12, 12)
 texture = ExtResource("3_bh0n7")
 
-[node name="SelectDifficultyText" type="Label" parent="Difficulty Select"]
+[node name="Select Difficulty Label" type="Label" parent="Difficulty Select"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -134,10 +134,10 @@ text = "6 (Impossible)"
 script = ExtResource("6_nev0s")
 speed = 6
 
-[node name="Speed Options2" type="VBoxContainer" parent="Difficulty Select/h_box_container"]
+[node name="High Scores" type="VBoxContainer" parent="Difficulty Select/h_box_container"]
 layout_mode = 2
 
-[node name="BoringHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+[node name="BoringHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
@@ -147,7 +147,7 @@ vertical_alignment = 1
 script = ExtResource("8_i3qp7")
 speed = 1
 
-[node name="EasyHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+[node name="EasyHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
@@ -157,7 +157,7 @@ vertical_alignment = 1
 script = ExtResource("8_i3qp7")
 speed = 2
 
-[node name="NormalHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+[node name="NormalHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
@@ -167,7 +167,7 @@ vertical_alignment = 1
 script = ExtResource("8_i3qp7")
 speed = 3
 
-[node name="HardHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+[node name="HardHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
@@ -177,7 +177,7 @@ vertical_alignment = 1
 script = ExtResource("8_i3qp7")
 speed = 4
 
-[node name="VeryHardHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+[node name="VeryHardHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
@@ -187,7 +187,7 @@ vertical_alignment = 1
 script = ExtResource("8_i3qp7")
 speed = 5
 
-[node name="ImpossibleHighScore" type="Label" parent="Difficulty Select/h_box_container/Speed Options2"]
+[node name="ImpossibleHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20

@@ -16,5 +16,4 @@ public partial class GameLoader : Node2D
             PlayerData.SaveData();
         }
     }
-
 }
