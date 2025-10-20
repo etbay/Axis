@@ -64,10 +64,6 @@ text = "Fullscreen"
 
 [node name="ResolutionOptions" type="OptionButton" parent="Menu/tab_container/Video/Settings"]
 layout_mode = 2
-item_count = 2
-popup/item_0/text = "1920x1080"
-popup/item_0/id = 0
-popup/item_1/id = 1
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -1
