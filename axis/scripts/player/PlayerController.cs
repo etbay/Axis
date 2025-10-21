@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 public partial class PlayerController : Node2D
 {
+    public event Action<string, int> KeyHit;
     private int movementDistance;
     private int numMovementsAllowed = 1;
     private int maxDistance;
@@ -128,6 +129,6 @@ public partial class PlayerController : Node2D
 
     private void ShowHitRating(string rating, int points)
     {
-        GetChild<GameUserInterface>(3).OnKeyHit(rating, points);
+        this.KeyHit?.Invoke(rating, points);
     }
 }

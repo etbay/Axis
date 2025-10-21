@@ -6,12 +6,15 @@ public partial class StatDisplay : Control
     private Label numHitRatingsLabel;
     private Label hitRatingScoresLabel;
     private Label totalScoreLabel;
+    private Button mainMenuButton;
 
     public override void _Ready()
     {
         this.numHitRatingsLabel = GetNode<Label>("Stats/NumHitRatingsLabel");
         this.hitRatingScoresLabel = GetNode<Label>("Stats/HitRatingScoresLabel");
         this.totalScoreLabel = GetNode<Label>("TotalScoreLabel");
+        this.mainMenuButton = GetNode<Button>("MainMenuButton");
+        this.mainMenuButton.Pressed += LoadMainMenu;
 
         SaveGame();
 
@@ -31,4 +34,8 @@ public partial class StatDisplay : Control
         PlayerData.SaveData();
     }
 
+    private void LoadMainMenu()
+    {
+        this.GetTree().ChangeSceneToPacked(GameData.MainMenu);
+    }
 }

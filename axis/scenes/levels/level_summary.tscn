@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://10mwchmknsij"]
+[gd_scene load_steps=4 format=3 uid="uid://10mwchmknsij"]
 
 [ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="1_45iqn"]
-[ext_resource type="PackedScene" uid="uid://br4uyycjwqaxk" path="res://scenes/stat_display.tscn" id="2_tpkee"]
-[ext_resource type="Script" uid="uid://duu88pxoiea16" path="res://scripts/ui/LoadSceneButton.cs" id="3_i1ej2"]
-[ext_resource type="PackedScene" uid="uid://cuwnmvtw5dtwr" path="res://scenes/levels/main_menu.tscn" id="4_qok5u"]
+[ext_resource type="Script" uid="uid://bbby1xha4vrei" path="res://scripts/GameManager.cs" id="1_tpkee"]
+[ext_resource type="Script" uid="uid://cl1lf2v0kt01x" path="res://scripts/ui/StatDisplay.cs" id="2_45iqn"]
 
 [node name="level_summary" type="Node2D"]
+script = ExtResource("1_tpkee")
 
 [node name="Camera" type="Camera2D" parent="."]
 
@@ -14,22 +14,87 @@ z_index = -1
 scale = Vector2(12, 12)
 texture = ExtResource("1_45iqn")
 
-[node name="Stat Display Control" parent="." instance=ExtResource("2_tpkee")]
-
-[node name="Main Menu Button" type="Button" parent="Stat Display Control"]
-custom_minimum_size = Vector2(160.895, 45.115)
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+[node name="StatDisplay" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -80.448
-offset_top = -147.08002
-offset_right = 80.44702
-offset_bottom = -101.96503
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+script = ExtResource("2_45iqn")
+
+[node name="Stats" type="HBoxContainer" parent="StatDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -142.5
+offset_top = -105.06
+offset_right = 142.5
+offset_bottom = 76.94
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HitRatingsLabel" type="Label" parent="StatDisplay/Stats"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Perfect:
+Great:
+Good:
+Okay:
+Miss:"
+
+[node name="NumHitRatingsLabel" type="Label" parent="StatDisplay/Stats"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "x10
+x3
+x4
+x5
+x6"
+
+[node name="HitRatingScoresLabel" type="Label" parent="StatDisplay/Stats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "1000
+150
+120
+75
+0"
+
+[node name="TotalScoreLabel" type="Label" parent="StatDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.5
+offset_top = 100.0
+offset_right = 73.5
+offset_bottom = 139.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 28
+text = "Total: 1375"
+horizontal_alignment = 1
+
+[node name="MainMenuButton" type="Button" parent="StatDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = 201.98
+offset_right = 48.0
+offset_bottom = 232.98
+grow_horizontal = 2
+grow_vertical = 2
 text = "Main Menu"
-script = ExtResource("3_i1ej2")
-scene = ExtResource("4_qok5u")

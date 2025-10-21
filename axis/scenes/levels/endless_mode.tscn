@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ccoky6bbpcp7x"]
+[gd_scene load_steps=11 format=3 uid="uid://ccoky6bbpcp7x"]
 
 [ext_resource type="Script" uid="uid://bbby1xha4vrei" path="res://scripts/GameManager.cs" id="1_b8rg6"]
 [ext_resource type="PackedScene" uid="uid://ciacnxn0vlnk6" path="res://scenes/player/player_controller.tscn" id="2_nev0s"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://2rebm2p5l4q2" path="res://scripts/ui/DifficultySelect.cs" id="5_bh0n7"]
 [ext_resource type="Script" uid="uid://bjl6dw7pa6dqr" path="res://scripts/ui/SpeedSelectionButton.cs" id="6_nev0s"]
 [ext_resource type="Script" uid="uid://dqne3e1ddvnii" path="res://scripts/ui/EndlessHighScoreLabel.cs" id="8_i3qp7"]
+[ext_resource type="Script" uid="uid://c4k0nj3o6c3ra" path="res://scripts/ui/GameUserInterface.cs" id="9_owisn"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mm7tu"]
 
@@ -15,17 +16,6 @@
 script = ExtResource("1_b8rg6")
 
 [node name="PlayerController" parent="." instance=ExtResource("2_nev0s")]
-
-[node name="Lives Count" type="Label" parent="PlayerController/GameUI" index="2"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 23.0
-grow_horizontal = 0
-text = "Lives: 3"
-script = ExtResource("3_b8rg6")
 
 [node name="Camera" type="Camera2D" parent="."]
 
@@ -37,8 +27,51 @@ z_index = -3
 scale = Vector2(12, 12)
 texture = ExtResource("3_bh0n7")
 
+[node name="GameUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -350.0
+offset_top = -350.0
+offset_right = 350.0
+offset_bottom = 350.0
+script = ExtResource("9_owisn")
+
+[node name="HitRatingLabel" type="Label" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -12.0
+offset_right = 30.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Great!"
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="GameUI"]
+layout_mode = 1
+offset_right = 148.0
+offset_bottom = 34.0
+text = "1000000"
+
+[node name="LivesCountLabel" type="Label" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -57.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "Lives: 3"
+script = ExtResource("3_b8rg6")
+
 [node name="Difficulty Select" type="Control" parent="."]
-z_index = 3
+visible = false
+z_index = 7
 custom_minimum_size = Vector2(720, 720)
 layout_mode = 3
 anchors_preset = 15

@@ -1,17 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://7q3eke0mvd6p"]
+[gd_scene load_steps=5 format=3 uid="uid://7q3eke0mvd6p"]
 
+[ext_resource type="Script" uid="uid://bbby1xha4vrei" path="res://scripts/GameManager.cs" id="1_t5vxw"]
+[ext_resource type="Script" uid="uid://0vogh4f7qe1c" path="res://scripts/ui/LevelSelect.cs" id="2_gqipl"]
 [ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="2_ul5r0"]
-[ext_resource type="Script" uid="uid://duu88pxoiea16" path="res://scripts/ui/LoadSceneButton.cs" id="3_gqipl"]
-[ext_resource type="Script" uid="uid://rmbn854xjy75" path="res://scripts/ui/LevelHighScoreLabel.cs" id="4_t5vxw"]
-[ext_resource type="PackedScene" uid="uid://4eu3yj7t2hl8" path="res://scenes/levels/level_one.tscn" id="4_ul5r0"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_j37a6"]
 
 [node name="level_select" type="Node2D"]
+script = ExtResource("1_t5vxw")
 
 [node name="Camera" type="Camera2D" parent="."]
 
-[node name="Level Select" type="Control" parent="."]
+[node name="LevelSelect" type="Control" parent="."]
 z_index = 3
 custom_minimum_size = Vector2(720, 720)
 layout_mode = 3
@@ -20,15 +20,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_gqipl")
 
-[node name="Background" type="Sprite2D" parent="Level Select"]
+[node name="Background" type="Sprite2D" parent="LevelSelect"]
 z_index = -3
 material = SubResource("CanvasItemMaterial_j37a6")
 position = Vector2(360, 360)
 scale = Vector2(12, 12)
 texture = ExtResource("2_ul5r0")
 
-[node name="SelectLevelText" type="Label" parent="Level Select"]
+[node name="SelectLevelText" type="Label" parent="LevelSelect"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -42,7 +43,7 @@ theme_override_font_sizes/font_size = 48
 text = "Select Level"
 horizontal_alignment = 1
 
-[node name="Levels" type="VBoxContainer" parent="Level Select"]
+[node name="Levels" type="VBoxContainer" parent="LevelSelect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -56,18 +57,32 @@ offset_bottom = 179.99976
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+theme_override_constants/separation = 40
 
-[node name="Level 1" type="Button" parent="Level Select/Levels"]
+[node name="LevelOneButton" type="Button" parent="LevelSelect/Levels"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "1"
-script = ExtResource("3_gqipl")
-scene = ExtResource("4_ul5r0")
 
-[node name="label" type="Label" parent="Level Select/Levels"]
-layout_mode = 2
+[node name="HighScoreLabel" type="Label" parent="LevelSelect/Levels/LevelOneButton"]
+layout_mode = 0
+offset_top = 53.0
+offset_right = 200.0
+offset_bottom = 75.333336
 text = "High Score:"
 horizontal_alignment = 1
-script = ExtResource("4_t5vxw")
-levelIndex = 1
+
+[node name="LevelTwoButton" type="Button" parent="LevelSelect/Levels"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "2"
+
+[node name="HighScoreLabel" type="Label" parent="LevelSelect/Levels/LevelTwoButton"]
+layout_mode = 0
+offset_top = 53.0
+offset_right = 200.0
+offset_bottom = 75.333336
+text = "High Score:"
+horizontal_alignment = 1

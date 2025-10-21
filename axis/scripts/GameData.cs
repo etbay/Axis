@@ -14,17 +14,15 @@ public static class GameData
     public static int GreatHitValue { get; } = 50;
     public static int GoodHitValue { get; } = 30;
     public static int OkayHitValue { get; } = 15;
-    public static PackedScene MainMenu { get; private set; }
-    public static PackedScene LevelSummary { get; private set; }
-    public static PackedScene EndlessMode { get; private set; }
-    public static List<PackedScene> Levels { get; private set; }
+    public static PackedScene MainMenu { get; } = GD.Load<PackedScene>("res://scenes/levels/main_menu.tscn");
+    public static PackedScene LevelSummary { get; } = GD.Load<PackedScene>("res://scenes/levels/level_summary.tscn");
+    public static PackedScene EndlessMode { get; } = GD.Load<PackedScene>("res://scenes/levels/endless_mode.tscn");
+    public static Dictionary<int, PackedScene> Levels { get; } = new Dictionary<int, PackedScene>()
+    {
+        { 1, GD.Load<PackedScene>("res://scenes/levels/level_one.tscn") },
+        { 2, GD.Load<PackedScene>("res://scenes/levels/level_two.tscn") }
+    };
+    
     public static int KeySpeed { get; set; } = 2;
     public static int KeyTravelDistance { get; } = 260;
-
-    public static void Initialize()
-    {
-        MainMenu = (PackedScene)ResourceLoader.Load("res://scenes/levels/main_menu.tscn");
-        LevelSummary = (PackedScene)ResourceLoader.Load("res://scenes/levels/level_summary.tscn");
-        EndlessMode = (PackedScene)ResourceLoader.Load("res://scenes/levels/endless_mode.tscn");
-    }
 }

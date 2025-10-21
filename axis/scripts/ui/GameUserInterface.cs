@@ -12,6 +12,7 @@ public partial class GameUserInterface : Control
     {
         this.hitRatingLabel = GetNode<Label>("HitRatingLabel");
         this.pointsLabel = GetNode<Label>("PointsLabel");
+        this.GetTree().Root.GetChild<Node2D>(0).GetNode<PlayerController>("PlayerController").KeyHit += OnKeyHit;
         this.pointsLabel.Text = "0";
         this.hitRatingLabel.Modulate = Color.Color8(255, 255, 255, 0);
         PlayerData.TotalScoreChanged += UpdateScore;

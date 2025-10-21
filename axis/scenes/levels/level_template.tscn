@@ -1,17 +1,32 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2d4xyx5np4ng"]
+[gd_scene load_steps=8 format=3 uid="uid://cw82g3awatfjw"]
 
-[ext_resource type="Script" uid="uid://bbby1xha4vrei" path="res://scripts/GameManager.cs" id="1_ds0u5"]
+[ext_resource type="Script" uid="uid://5se2tomsi4d6" path="res://scripts/LevelManager.cs" id="1_eokde"]
 [ext_resource type="PackedScene" uid="uid://ciacnxn0vlnk6" path="res://scenes/player/player_controller.tscn" id="1_mm7tu"]
 [ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="3_6lum8"]
 [ext_resource type="Script" uid="uid://xnb1isg8gm5y" path="res://scripts/KeyGenerator.cs" id="4_ds0u5"]
-[ext_resource type="PackedScene" uid="uid://dvvqmuplcygb4" path="res://scenes/key.tscn" id="5_4s5u3"]
+[ext_resource type="AudioStream" uid="uid://da4fnwp3udcrp" path="res://assets/songs/Axis1.wav" id="4_ulyey"]
+[ext_resource type="Script" uid="uid://c4k0nj3o6c3ra" path="res://scripts/ui/GameUserInterface.cs" id="6_j81xe"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mm7tu"]
 
-[node name="level_template" type="Node2D"]
-script = ExtResource("1_ds0u5")
+[node name="LevelOne" type="Node2D" node_paths=PackedStringArray("song")]
+script = ExtResource("1_eokde")
+levelIndex = 1
+song = NodePath("LevelSong")
+secondsToWait = 5
+levelKeySpeed = 3
 
 [node name="PlayerController" parent="." instance=ExtResource("1_mm7tu")]
+
+[node name="KeyGenerator" type="Node2D" parent="."]
+position = Vector2(1, 0)
+script = ExtResource("4_ds0u5")
+keySpawnTimeMs = Array[int]([40, 48, 56, 80, 88, 96, 120, 128, 136, 160, 168, 176, 200, 240, 255, 265, 271, 276, 280, 285, 290, 295, 300, 305, 310, 315, 320, 325, 330, 335, 340, 345, 350, 355, 360, 365, 370, 375, 380, 385, 390, 395, 400, 405, 410, 415, 420, 425, 430, 435, 440, 445, 450, 455, 460, 465, 470, 475, 480, 485, 490, 495, 500, 505, 510, 515, 520, 525, 530, 535, 540, 545, 550, 555, 560, 565, 570, 575, 580, 585, 590, 595, 600, 608, 616, 640, 648, 656, 680, 688, 696, 720, 728, 736, 760, 800, 815, 825, 831, 836, 840, 845, 850, 855, 860, 865, 870, 875, 880, 885, 890, 895, 900, 905, 910, 915, 920, 925, 930, 935, 940, 945, 950, 955, 960, 965, 970, 975, 980, 985, 990, 995, 1000, 1005, 1010, 1015, 1020, 1025, 1030, 1035, 1040, 1045, 1050, 1055, 1060, 1065, 1070, 1075, 1080, 1085, 1090, 1095, 1100, 1105, 1110, 1115, 1120, 1125, 1130, 1135, 1140, 1145, 1150, 1155, 1160, 1168, 1176, 1200, 1208, 1216, 1240, 1248, 1256, 1280, 1288, 1296])
+keyDirections = Array[int]([2, 2, 2, 3, 3, 3, 1, 1, 1, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 0, 0, 1, 1, 1, 1, 0, 0, 2, 2, 3, 3, 3, 3, 0, 0, 1, 1, 0, 0, 0, 0, 3, 3, 1, 1, 2, 3, 2, 3, 0, 1, 0, 1, 3, 2, 3, 2, 1, 0, 1, 0, 2, 0, 2, 0, 3, 1, 3, 1, 0, 3, 0, 3, 2, 1, 2, 1, 2, 2, 2, 3, 3, 3, 1, 1, 1, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 0, 0, 1, 1, 1, 1, 0, 0, 2, 2, 3, 3, 3, 3, 0, 0, 1, 1, 0, 0, 0, 0, 3, 3, 1, 1, 2, 3, 2, 3, 0, 1, 0, 1, 3, 2, 3, 2, 1, 0, 1, 0, 2, 0, 2, 0, 3, 1, 3, 1, 0, 3, 0, 3, 2, 1, 2, 1, 2, 2, 2, 3, 3, 3, 1, 1, 1, 0, 0, 0])
+keyOffsets = Array[int]([0, 1, 2, 2, 1, 0, 2, 0, 1, 0, 2, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 2, 2, 1, 1, 0, 0, 2, 0, 2, 2, 0, 0, 2, 2, 1, 2, 0, 0, 2, 2, 0, 1, 0, 1, 1, 2, 1, 2, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 2, 0, 2, 0, 1, 0, 1, 2, 1, 2, 1, 0, 1, 2, 2, 1, 0, 2, 0, 1, 0, 2, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 1, 0, 0, 1, 1, 2, 2, 1, 1, 1, 0, 2, 2, 1, 1, 0, 2, 2, 0, 2, 2, 0, 0, 2, 1, 2, 1, 2, 0, 2, 0, 1, 0, 1, 0, 2, 1, 2, 1, 1, 0, 1, 0, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 0, 1, 2, 2, 1, 0, 2, 0, 1, 0, 2, 1])
+
+[node name="LevelSong" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ulyey")
 
 [node name="Camera" type="Camera2D" parent="."]
 
@@ -21,9 +36,33 @@ material = SubResource("CanvasItemMaterial_mm7tu")
 scale = Vector2(12, 12)
 texture = ExtResource("3_6lum8")
 
-[node name="KeyGenerator" type="Node2D" parent="."]
-script = ExtResource("4_ds0u5")
-KeyScene = ExtResource("5_4s5u3")
-keySpawnTimeSeconds = Array[int]([2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
-keyDirections = Array[int]([2, 3, 1, 0, 2, 3, 1, 0, 2, 0])
-keyOffsets = Array[int]([1, 0, -1, 0, -1, 1, -1, 0, -1, 1])
+[node name="GameUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -350.0
+offset_top = -350.0
+offset_right = 350.0
+offset_bottom = 350.0
+script = ExtResource("6_j81xe")
+
+[node name="HitRatingLabel" type="Label" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -12.0
+offset_right = 30.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Great!"
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="GameUI"]
+layout_mode = 1
+offset_right = 148.0
+offset_bottom = 34.0
+text = "1000000"
