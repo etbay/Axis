@@ -49,19 +49,19 @@ public partial class KeyGenerator : Node2D
 
     protected virtual void SpawnKey()
     {
-        Node key = this.KeyScene.Instantiate();
+        Node keyScene = this.KeyScene.Instantiate();
 
-        if (key is Key k)
+        if (keyScene is Key key)
         {
             int index = this.keySpawnQueue.Dequeue().Item2;
 
-            k.SetData(this.keyDirections[index], this.keyOffsets[index]);
-            k.SpawnTimeMs = this.SongPlaybackPosition;
-            this.keySpawnOrder.Add(k);
-            k.KeyDestroyed += this.OnKeyDestroy;
+            key.SetData(this.keyDirections[index], this.keyOffsets[index]);
+            key.SpawnTimeMs = this.SongPlaybackPosition;
+            this.keySpawnOrder.Add(key);
+            key.KeyDestroyed += this.OnKeyDestroy;
         }
 
-        this.AddChild(key);
+        this.AddChild(keyScene);
         this.HighlightClosestKey();
     }
 

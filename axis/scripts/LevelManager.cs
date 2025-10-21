@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 public partial class LevelManager : Node2D
 {
     [Export] private int levelIndex;
-    [Export] private int secondsToWait;
     private AudioStreamPlayer2D levelSong;
     private KeyGenerator keyGenerator;
     private GameUserInterface gameUserInterface;
-    private bool isSongPlaying = false;
-    private int startTime;
 
     public override void _Ready()
     {
@@ -21,7 +18,6 @@ public partial class LevelManager : Node2D
         this.gameUserInterface = GetNode<GameUserInterface>("GameUI");
 
         Key.IsInLevel = true;
-        this.startTime = (int)Time.GetTicksMsec();
         _ = StartLevel();
     }
 
