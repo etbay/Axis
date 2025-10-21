@@ -70,7 +70,6 @@ text = "Lives: 3"
 script = ExtResource("3_b8rg6")
 
 [node name="Difficulty Select" type="Control" parent="."]
-visible = false
 z_index = 7
 custom_minimum_size = Vector2(720, 720)
 layout_mode = 3

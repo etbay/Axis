@@ -146,7 +146,7 @@ public partial class Key : Area2D
                 this.hitEffect.Scale = this.hitEffect.Scale * 0.6f;
                 break;
             case "Okay":
-                this.hitEffect.Scale = this.hitEffect.Scale * 0.4f;
+                this.hitEffect.Scale = this.hitEffect.Scale * 0f;
                 break;
         }
 
