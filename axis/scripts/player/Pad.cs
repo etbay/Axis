@@ -53,27 +53,31 @@ public partial class Pad : Area2D
 
             keysInHitbox.Add(key);
 
+            string hitRating;
             Vector2 posDifference = (this.GlobalPosition - area.GlobalPosition).Abs();
             if (posDifference.X < 10 && posDifference.Y < 10)
             {
-                KeyHit?.Invoke("Perfect!", GameData.PerfectHitValue);
+                hitRating = "Perfect!";
                 PlayerData.NumPerfects++;
             }
             else if (posDifference.X < 20 && posDifference.Y < 20)
             {
-                KeyHit?.Invoke("Great!", GameData.GreatHitValue);
+                hitRating = "Great!";
                 PlayerData.NumGreats++;
             }
             else if (posDifference.X < 40 && posDifference.Y < 40)
             {
-                KeyHit?.Invoke("Good!", GameData.GoodHitValue);
+                hitRating = "Good!";
                 PlayerData.NumGoods++;
             }
             else
             {
-                KeyHit?.Invoke("Okay", GameData.OkayHitValue);
+                hitRating = "Okay";
                 PlayerData.NumOkays++;
             }
+
+            if (GameData.HitValues.ContainsKey(hitRating))
+                KeyHit?.Invoke(hitRating, GameData.HitValues[hitRating]);
 
             Key firstKey = keysInHitbox.First();
             foreach (Key k in keysInHitbox)
@@ -84,7 +88,7 @@ public partial class Pad : Area2D
                 }
             }
             keysInHitbox.Remove(firstKey);
-            firstKey.QueueFree();
+            firstKey.Hit(hitRating);
         }
     }
 

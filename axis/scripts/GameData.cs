@@ -10,6 +10,14 @@ public static class GameData
     public static Color LeftColor { get; } = Color.Color8(0, 255, 0, 255);      // lime
     public static Color RightColor { get; } = Color.Color8(255, 165, 0, 255);   // orange
     public static Vector2 WindowSize { get; } = new Vector2(720, 720);
+    public static Dictionary<string, int> HitValues { get; } = new Dictionary<string, int>()
+    {
+        { "Perfect!", 100 },
+        { "Great!", 50 },
+        { "Good!", 30 },
+        { "Okay", 15 },
+        { "Miss", 0 }
+    };
     public static int PerfectHitValue { get; } = 100;
     public static int GreatHitValue { get; } = 50;
     public static int GoodHitValue { get; } = 30;

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class Key : Area2D
 {
@@ -25,7 +26,9 @@ public partial class Key : Area2D
     private Sprite2D sprite;
     private Color color;
     private PointLight2D light;
+    private Sprite2D hitEffect;
     private Area2D hitbox;
+    private bool isHit;
     public double SpawnTimeMs { get; set; } = 0;
 
     public override void _Ready()
@@ -48,13 +51,16 @@ public partial class Key : Area2D
 
     public override void _ExitTree()
     {
-        KeyDestroyed?.Invoke(this);
+        if (!isHit)
+            KeyDestroyed?.Invoke(this);
     }
 
     public void Initialize()
     {
         this.sprite = GetNode<Sprite2D>("Sprite");
         this.light = GetNode<PointLight2D>("PointLight");
+        this.hitEffect = GetNode<Sprite2D>("HitEffect");
+        this.hitEffect.Visible = false;
     }
 
     public void SetData(KeyDirection keyDirection, KeyOffset keyOffset)
@@ -112,6 +118,60 @@ public partial class Key : Area2D
         Color newColor = this.sprite.Modulate;
         newColor.A = 1.0f;
         this.sprite.Modulate = newColor;
+    }
+
+    public void Hit(string hitRating)
+    {
+        if (this.isHit)
+        {
+            return;
+        }
+
+        this.isHit = true;
+        this.hitEffect.Modulate = this.color;
+
+        if (this.direction == Vector2.Up || this.direction == Vector2.Down)
+        {
+            this.hitEffect.RotationDegrees = 0;
+        }
+
+        switch (hitRating)
+        {
+            case "Perfect!":
+                break;
+            case "Great!":
+                this.hitEffect.Scale = this.hitEffect.Scale * 0.8f;
+                break;
+            case "Good!":
+                this.hitEffect.Scale = this.hitEffect.Scale * 0.6f;
+                break;
+            case "Okay":
+                this.hitEffect.Scale = this.hitEffect.Scale * 0.4f;
+                break;
+        }
+
+        this.hitEffect.Visible = true;
+        _ = FadeOut();
+    }
+
+    private async Task FadeOut()
+    {
+        KeyDestroyed?.Invoke(this);
+
+        this.SetProcess(false);
+        this.sprite.Visible = false;
+
+        Tween fadeInTween = CreateTween();
+        fadeInTween.TweenProperty(this.hitEffect, "modulate:a", 0.35f, 0.1f);
+        fadeInTween.Play();
+        await ToSignal(fadeInTween, "finished");
+
+        Tween fadeOutTween = CreateTween();
+        fadeOutTween.TweenProperty(this.hitEffect, "modulate:a", 0f, 0.5f);
+        fadeOutTween.Play();
+        await ToSignal(fadeOutTween, "finished");
+        
+        this.QueueFree();
     }
 
     private void MoveLevelKey()
