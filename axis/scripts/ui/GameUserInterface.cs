@@ -25,17 +25,23 @@ public partial class GameUserInterface : Control
 
     public void OnKeyHit(string text, int pointValue)
     {
+        PlayerData.TotalScore += pointValue;
+        this.SetHitRatingText(text);
+    }
+
+    public void SetHitRatingText(string text)
+    {
         if (fadeOutTween != null && fadeOutTween.IsRunning())
             fadeOutTween?.Kill();
 
         this.hitRatingLabel.Text = text;
-        PlayerData.TotalScore += pointValue;
         this.hitRatingLabel.Modulate = Color.Color8(255, 255, 255, 255);
 
         fadeOutTween = CreateTween();
         fadeOutTween.TweenProperty(this.hitRatingLabel, "modulate:a", 0f, 1);
         fadeOutTween.Play();
     }
+
     private void UpdateScore(int score)
     {
         this.pointsLabel.Text = score.ToString();

@@ -7,9 +7,6 @@ public partial class MainMenu : Control
     private Button endlessModeButton;
     private Button settingsButton;
     private Button exitButton;
-    private PackedScene levelSelection = GD.Load<PackedScene>("res://scenes/levels/level_select.tscn");
-    private PackedScene settings = GD.Load<PackedScene>("res://scenes/levels/settings.tscn");
-
     public override void _Ready()
     {
         this.playButton = GetNode<Button>("Buttons/PlayButton");
@@ -27,7 +24,7 @@ public partial class MainMenu : Control
 
     private void LoadLevelSelect()
     {
-        this.GetTree().ChangeSceneToPacked(this.levelSelection);
+        this.GetTree().ChangeSceneToPacked(GameData.LevelSelection);
     }
 
     private void LoadEndlessMode()
@@ -37,7 +34,7 @@ public partial class MainMenu : Control
 
     private void LoadSettings()
     {
-        this.GetTree().ChangeSceneToPacked(this.settings);
+        this.GetTree().ChangeSceneToPacked(GameData.Settings);
     }
 
     private void ExitGame()

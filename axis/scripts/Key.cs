@@ -22,12 +22,10 @@ public partial class Key : Area2D
 
     private Vector2 spawnPosition;
     private Vector2 direction;
-    private int speed;
     private Sprite2D sprite;
     private Color color;
     private PointLight2D light;
     private Area2D hitbox;
-    private double travelTimeMs = 1600;
     public double SpawnTimeMs { get; set; } = 0;
 
     public Vector2 SpawnPosition
@@ -105,14 +103,13 @@ public partial class Key : Area2D
         this.light = GetNode<PointLight2D>("PointLight");
         this.sprite.Modulate = this.color;
         this.Position = this.SpawnPosition;
-        this.speed = GameData.KeySpeed;
     }
 
     public override void _Process(double delta)
     {
         if (!IsInLevel)
         {
-            this.Position += this.direction * this.speed;
+            this.Position += this.direction * GameData.KeySpeed;
         }
         else
         {
@@ -137,7 +134,7 @@ public partial class Key : Area2D
         if (GetParent() is KeyGenerator generator)
         {
             double songTimeMs = generator.SongPlaybackPosition;
-            double t = (songTimeMs - SpawnTimeMs) / travelTimeMs;
+            double t = (songTimeMs - SpawnTimeMs) / GameData.KeyTravelTime;
             this.Position = this.spawnPosition + (this.direction * (GameData.KeyTravelDistance + 5) * (float)t);
         }
     }

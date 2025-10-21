@@ -66,3 +66,10 @@ layout_mode = 1
 offset_right = 148.0
 offset_bottom = 34.0
 text = "1000000"
+
+[node name="PauseMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

@@ -1,35 +1,39 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
-public partial class LevelManager : GameManager
+public partial class LevelManager : Node2D
 {
     [Export] private int levelIndex;
-    [Export] private AudioStreamPlayer2D song;
     [Export] private int secondsToWait;
-    [Export] private int levelKeySpeed;
+    private AudioStreamPlayer2D levelSong;
     private KeyGenerator keyGenerator;
+    private GameUserInterface gameUserInterface;
     private bool isSongPlaying = false;
     private int startTime;
 
     public override void _Ready()
     {
-        base._Ready();  // init GameData (for debug mode)
+        this.levelSong = GetNode<AudioStreamPlayer2D>("LevelSong");
         this.keyGenerator = GetNode<KeyGenerator>("KeyGenerator");
         this.keyGenerator.LevelEnd += this.UpdatePlayerData;
-        this.keyGenerator.Song = this.song;
+        this.keyGenerator.Song = this.levelSong;
+        this.gameUserInterface = GetNode<GameUserInterface>("GameUI");
+
         Key.IsInLevel = true;
-        GameData.KeySpeed = this.levelKeySpeed;
         this.startTime = (int)Time.GetTicksMsec();
+        _ = StartLevel();
     }
 
-    public override void _Process(double delta)
+    private async Task StartLevel()
     {
-        base._Process(delta);   // detects esc
-        if (!isSongPlaying && ((int)Time.GetTicksMsec() - startTime) / 1000 >= secondsToWait)
-        {
-            song.Play();
-            isSongPlaying = true;
-        }
+        this.gameUserInterface.SetHitRatingText("3");
+        await ToSignal(GetTree().CreateTimer(1.0f), "timeout");
+        this.gameUserInterface.SetHitRatingText("2");
+        await ToSignal(GetTree().CreateTimer(1.0f), "timeout");
+        this.gameUserInterface.SetHitRatingText("1");
+        await ToSignal(GetTree().CreateTimer(1.0f), "timeout");
+        levelSong.Play();
     }
 
     private void UpdatePlayerData()
