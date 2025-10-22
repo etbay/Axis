@@ -7,9 +7,9 @@ using System.Linq;
 public partial class Pad : Area2D
 {
     public static Action<string, int> KeyHit;
-    [Export] private Color padColor;
     private CollisionShape2D hitbox;
     private Sprite2D sprite;
+    private PointLight2D light;
     private bool isPadDisabled = false;
     private List<Key> keysInHitbox = new List<Key>();
 
@@ -18,22 +18,39 @@ public partial class Pad : Area2D
         this.AreaEntered += OnHitboxEntered;
         this.hitbox = GetNode<CollisionShape2D>("Hitbox");
         this.sprite = GetNode<Sprite2D>("Sprite");
-        this.sprite.Modulate = padColor;
+        this.light = GetNode<PointLight2D>("PointLight");
+        this.light.Visible = false;
+    }
+
+    public void SetColor(Color color)
+    {
+        this.sprite.Modulate = color;
+        this.light.Modulate = color;
+
+        Color newColor = this.sprite.Modulate;
+        newColor.A = 0.6f;
+        this.sprite.Modulate = newColor;
     }
 
     public async Task Activate()
     {
         this.hitbox.Disabled = false;
+        this.light.Visible = true;
         await ToSignal(GetTree().CreateTimer(0.05f), "timeout");
         this.hitbox.Disabled = true;
+        this.light.Visible = false;
     }
 
-    public async Task HighlightPad()
+    public void SelectPad()
     {
         Color newColor = this.sprite.Modulate;
         newColor.A = 1.0f;
         this.sprite.Modulate = newColor;
-        await ToSignal(GetTree().CreateTimer(0.05f), "timeout");
+    }
+
+    public void DeselectPad()
+    {
+        Color newColor = this.sprite.Modulate;
         newColor.A = 0.6f;
         this.sprite.Modulate = newColor;
     }

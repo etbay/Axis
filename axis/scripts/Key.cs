@@ -21,13 +21,14 @@ public partial class Key : Area2D
         NORMAL, HOLD
     }
 
+    private KeyType keyType;
+    private double keyLengthMs;
     private Vector2 spawnPosition;
     private Vector2 direction;
     private Sprite2D sprite;
     private Color color;
     private PointLight2D light;
     private Sprite2D hitEffect;
-    private Area2D hitbox;
     private bool isHit;
     public double SpawnTimeMs { get; set; } = 0;
 
@@ -118,6 +119,7 @@ public partial class Key : Area2D
         Color newColor = this.sprite.Modulate;
         newColor.A = 1.0f;
         this.sprite.Modulate = newColor;
+        this.light.Energy = 1;
     }
 
     public void Hit(string hitRating)
@@ -160,6 +162,7 @@ public partial class Key : Area2D
 
         this.SetProcess(false);
         this.sprite.Visible = false;
+        this.light.Visible = false;
 
         Tween fadeInTween = CreateTween();
         fadeInTween.TweenProperty(this.hitEffect, "modulate:a", 0.35f, 0.1f);
@@ -167,7 +170,7 @@ public partial class Key : Area2D
         await ToSignal(fadeInTween, "finished");
 
         Tween fadeOutTween = CreateTween();
-        fadeOutTween.TweenProperty(this.hitEffect, "modulate:a", 0f, 0.5f);
+        fadeOutTween.TweenProperty(this.hitEffect, "modulate:a", 0f, 0.3f);
         fadeOutTween.Play();
         await ToSignal(fadeOutTween, "finished");
         

@@ -27,11 +27,15 @@ public partial class PlayerController : Node2D
         // LR pads must be first child
         leftRightPads = GetNode<Node2D>("LRPads");
         leftPad = GetNode<Pad>("LRPads/LeftPad");
+        leftPad.SetColor(GameData.LeftColor);
         rightPad = GetNode<Pad>("LRPads/RightPad");
+        rightPad.SetColor(GameData.RightColor);
         // TB pads must be second child
         upDownPads = GetNode<Node2D>("TBPads");
         upPad = GetNode<Pad>("TBPads/TopPad");
+        upPad.SetColor(GameData.UpColor);
         downPad = GetNode<Pad>("TBPads/BottomPad");
+        downPad.SetColor(GameData.DownColor);
 
         killzone = GetNode<Killzone>("Killzone");
 
@@ -105,25 +109,41 @@ public partial class PlayerController : Node2D
         if (Input.IsActionJustPressed("press_pad_up"))
         {
             _ = upPad.Activate();
-            _ = upPad.HighlightPad();
+            upPad.SelectPad();
+        }
+        else if (Input.IsActionJustReleased("press_pad_up"))
+        {
+            upPad.DeselectPad();
         }
 
         if (Input.IsActionJustPressed("press_pad_down"))
         {
             _ = downPad.Activate();
-            _ = downPad.HighlightPad();
+            downPad.SelectPad();
+        }
+        else if (Input.IsActionJustReleased("press_pad_down"))
+        {
+            downPad.DeselectPad();
         }
 
         if (Input.IsActionJustPressed("press_pad_left"))
         {
             _ = leftPad.Activate();
-            _ = leftPad.HighlightPad();
+            leftPad.SelectPad();
+        }
+        else if (Input.IsActionJustReleased("press_pad_left"))
+        {
+            leftPad.DeselectPad();
         }
 
         if (Input.IsActionJustPressed("press_pad_right"))
         {
             _ = rightPad.Activate();
-            _ = rightPad.HighlightPad();
+            rightPad.SelectPad();
+        }
+        else if (Input.IsActionJustReleased("press_pad_right"))
+        {
+            rightPad.DeselectPad();
         }
     }
 

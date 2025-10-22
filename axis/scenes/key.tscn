@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dvvqmuplcygb4"]
+[gd_scene load_steps=9 format=3 uid="uid://dvvqmuplcygb4"]
 
 [ext_resource type="Script" uid="uid://tyvbfg2retea" path="res://scripts/Key.cs" id="1_fttkb"]
 [ext_resource type="Texture2D" uid="uid://et037olil3hv" path="res://assets/KeyPadShape.png" id="2_fttkb"]
-[ext_resource type="Texture2D" uid="uid://c35pbbd7a4ov6" path="res://assets/diamonds (7).png" id="3_wy8tx"]
+[ext_resource type="Texture2D" uid="uid://c35pbbd7a4ov6" path="res://assets/KeyHitEffectShape.png" id="3_wy8tx"]
 
 [sub_resource type="Gradient" id="Gradient_fttkb"]
 offsets = PackedFloat32Array(0, 0.5, 1)
@@ -19,6 +19,12 @@ fill_from = Vector2(0.4957265, 0.47863248)
 fill_to = Vector2(0.4957265, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fttkb"]
+
+[sub_resource type="Gradient" id="Gradient_wy8tx"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.133)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_brs3p"]
+gradient = SubResource("Gradient_wy8tx")
 
 [node name="Key" type="Area2D"]
 script = ExtResource("1_fttkb")
@@ -44,3 +50,11 @@ z_index = -1
 rotation = 1.5707964
 scale = Vector2(0.15, 0.45)
 texture = ExtResource("3_wy8tx")
+
+[node name="KeyLength" type="Node2D" parent="."]
+visible = false
+
+[node name="KeyLengthSprite" type="Sprite2D" parent="KeyLength"]
+position = Vector2(32, 0)
+scale = Vector2(1, 0.5)
+texture = SubResource("GradientTexture2D_brs3p")
