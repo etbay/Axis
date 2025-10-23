@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://dyl3hxy8sx6tq"]
+
+[ext_resource type="Script" uid="uid://5se2tomsi4d6" path="res://scripts/LevelManager.cs" id="1_uh3ll"]
+[ext_resource type="PackedScene" uid="uid://ciacnxn0vlnk6" path="res://scenes/player/player_controller.tscn" id="2_4lw2e"]
+[ext_resource type="Script" uid="uid://xnb1isg8gm5y" path="res://scripts/KeyGenerator.cs" id="3_bqmi1"]
+[ext_resource type="AudioStream" uid="uid://da4fnwp3udcrp" path="res://assets/songs/Axis1.wav" id="4_8883n"]
+[ext_resource type="Script" uid="uid://c4k0nj3o6c3ra" path="res://scripts/ui/GameUserInterface.cs" id="5_es4qh"]
+[ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="6_s0ovu"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mm7tu"]
+
+[node name="LevelOne" type="Node2D"]
+script = ExtResource("1_uh3ll")
+levelIndex = 1
+
+[node name="PlayerController" parent="." instance=ExtResource("2_4lw2e")]
+
+[node name="KeyGenerator" type="Node2D" parent="."]
+position = Vector2(1, 0)
+script = ExtResource("3_bqmi1")
+keySpawnTimeMs = Array[int]([30, 40])
+keyDirections = Array[int]([2, 1])
+keyOffsets = Array[int]([1, 1])
+keyTypes = Array[int]([1, 0])
+keyLengthMs = Array[int]([3000, 0])
+
+[node name="LevelSong" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_8883n")
+
+[node name="GameUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -350.0
+offset_top = -350.0
+offset_right = 350.0
+offset_bottom = 350.0
+script = ExtResource("5_es4qh")
+
+[node name="HitRatingLabel" type="Label" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -12.0
+offset_right = 30.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Great!"
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="GameUI"]
+layout_mode = 1
+offset_right = 148.0
+offset_bottom = 34.0
+text = "1000000"
+
+[node name="PauseMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Camera" type="Camera2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -3
+material = SubResource("CanvasItemMaterial_mm7tu")
+scale = Vector2(12, 12)
+texture = ExtResource("6_s0ovu")

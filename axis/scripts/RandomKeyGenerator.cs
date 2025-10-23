@@ -50,7 +50,7 @@ public partial class RandomKeyGenerator : KeyGenerator
             var keyDirectionValues = Enum.GetValues(typeof(Key.KeyDirection));
             var keyOffsetValues = Enum.GetValues(typeof(Key.KeyOffset));
             k.SetData((Key.KeyDirection)keyDirectionValues.GetValue(random.Next(keyDirectionValues.Length)),
-                (Key.KeyOffset)keyOffsetValues.GetValue(random.Next(keyOffsetValues.Length)));
+                (Key.KeyOffset)keyOffsetValues.GetValue(random.Next(keyOffsetValues.Length)), Key.KeyType.NORMAL, 0);
             this.keySpawnOrder.Add(k);
             k.KeyDestroyed += this.OnKeyDestroy;
         }

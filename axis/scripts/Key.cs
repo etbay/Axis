@@ -20,16 +20,19 @@ public partial class Key : Area2D
     {
         NORMAL, HOLD
     }
-
-    private KeyType keyType;
-    private double keyLengthMs;
     private Vector2 spawnPosition;
     private Vector2 direction;
     private Sprite2D sprite;
+    private Sprite2D keyLengthTail;
     private Color color;
     private PointLight2D light;
     private Sprite2D hitEffect;
+    private Node2D keyLength;
+    private Vector2 keyLengthScale;
     private bool isHit;
+    private bool isHeld;
+    public KeyType HitType { get; private set; }
+    public int KeyLengthMs { get; private set; }
     public double SpawnTimeMs { get; set; } = 0;
 
     public override void _Ready()
@@ -62,9 +65,12 @@ public partial class Key : Area2D
         this.light = GetNode<PointLight2D>("PointLight");
         this.hitEffect = GetNode<Sprite2D>("HitEffect");
         this.hitEffect.Visible = false;
+        this.keyLength = GetNode<Node2D>("KeyLength");
+        this.keyLength.Visible = false;
+        this.keyLengthTail = GetNode<Sprite2D>("KeyLength/KeyLengthSprite/KeyLengthTailSprite");
     }
 
-    public void SetData(KeyDirection keyDirection, KeyOffset keyOffset)
+    public void SetData(KeyDirection keyDirection, KeyOffset keyOffset, KeyType keyType, int lengthMs)
     {
         this.Initialize();
 
@@ -76,12 +82,14 @@ public partial class Key : Area2D
                 this.spawnPosition = Vector2.Down * (int)(GameData.WindowSize.X / 2);
                 this.color = GameData.DownColor;
                 this.light.Color = GameData.DownColor;
+                this.keyLength.RotationDegrees = 90;
                 break;
             case KeyDirection.DOWN:
                 this.direction = Vector2.Down;
                 this.spawnPosition = Vector2.Up * (int)(GameData.WindowSize.X / 2);
                 this.color = GameData.UpColor;
                 this.light.Color = GameData.UpColor;
+                this.keyLength.RotationDegrees = 270;
                 break;
             case KeyDirection.LEFT:
                 this.direction = Vector2.Left;
@@ -94,6 +102,7 @@ public partial class Key : Area2D
                 this.spawnPosition = Vector2.Left * (int)(GameData.WindowSize.X / 2);
                 this.color = GameData.LeftColor;
                 this.light.Color = GameData.LeftColor;
+                this.keyLength.RotationDegrees = 180;
                 break;
         }
         this.color.A = 0.5f;
@@ -111,6 +120,18 @@ public partial class Key : Area2D
             case KeyOffset.POSITIVE:
                 this.spawnPosition += new Vector2(spawnDirection.Y, spawnDirection.X) * GameData.KeyOffsetDistance;
                 break;
+        }
+
+        if (keyType == Key.KeyType.HOLD)
+        {
+            GD.Print("Setting holding key to be held for " + (float)lengthMs / 1000 + " seconds");
+            this.HitType = KeyType.HOLD;
+            this.KeyLengthMs = lengthMs;
+            this.keyLength.Modulate = this.color;
+            this.keyLengthTail.Modulate = this.color;
+            this.keyLengthScale = new Vector2((float)KeyLengthMs / 500, 1);
+            this.keyLength.Scale = keyLengthScale;
+            this.keyLength.Visible = true;
         }
     }
 
@@ -156,6 +177,38 @@ public partial class Key : Area2D
         _ = FadeOut();
     }
 
+    public void Hold()
+    {
+        this.SetProcess(false);
+        KeyDestroyed?.Invoke(this);
+    }
+
+    public bool ShortenKey(double scaleFactor)
+    {
+        if (scaleFactor <= 0)
+        {
+            this.keyLength.Scale = new Vector2((float)scaleFactor, 1);
+            return false;
+        }
+        this.keyLength.Scale = keyLengthScale * new Vector2((float)scaleFactor, 1);
+        return true;
+    }
+
+    public double GetRemainingKeyLengthPercentage()
+    {
+        return 1 - (this.keyLength.Scale / this.keyLengthScale).X;
+    }
+    
+    private void MoveLevelKey()
+    {
+        if (GetParent() is KeyGenerator generator)
+        {
+            double songTimeMs = generator.SongPlaybackPosition;
+            double t = (songTimeMs - SpawnTimeMs) / GameData.KeyTravelTime;
+            this.Position = this.spawnPosition + (this.direction * (GameData.KeyTravelDistance + 5) * (float)t);
+        }
+    }
+
     private async Task FadeOut()
     {
         KeyDestroyed?.Invoke(this);
@@ -169,21 +222,15 @@ public partial class Key : Area2D
         fadeInTween.Play();
         await ToSignal(fadeInTween, "finished");
 
+        Tween keyLengthfadeOutTween = CreateTween();
+        keyLengthfadeOutTween.TweenProperty(this.keyLength, "modulate:a", 0f, 0.3f);
+        keyLengthfadeOutTween.Play();
+
         Tween fadeOutTween = CreateTween();
         fadeOutTween.TweenProperty(this.hitEffect, "modulate:a", 0f, 0.3f);
         fadeOutTween.Play();
         await ToSignal(fadeOutTween, "finished");
         
         this.QueueFree();
-    }
-
-    private void MoveLevelKey()
-    {
-        if (GetParent() is KeyGenerator generator)
-        {
-            double songTimeMs = generator.SongPlaybackPosition;
-            double t = (songTimeMs - SpawnTimeMs) / GameData.KeyTravelTime;
-            this.Position = this.spawnPosition + (this.direction * (GameData.KeyTravelDistance + 5) * (float)t);
-        }
     }
 }

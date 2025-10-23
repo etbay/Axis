@@ -12,6 +12,7 @@ public partial class Pad : Area2D
     private PointLight2D light;
     private bool isPadDisabled = false;
     private List<Key> keysInHitbox = new List<Key>();
+    public bool IsPadSelected { get; private set; } = false;
 
     public override void _Ready()
     {
@@ -43,6 +44,7 @@ public partial class Pad : Area2D
 
     public void SelectPad()
     {
+        IsPadSelected = true;
         Color newColor = this.sprite.Modulate;
         newColor.A = 1.0f;
         this.sprite.Modulate = newColor;
@@ -50,6 +52,7 @@ public partial class Pad : Area2D
 
     public void DeselectPad()
     {
+        IsPadSelected = false;
         Color newColor = this.sprite.Modulate;
         newColor.A = 0.6f;
         this.sprite.Modulate = newColor;
@@ -59,54 +62,111 @@ public partial class Pad : Area2D
     {
         if (area is Key key)
         {
-            if (isPadDisabled)
+            if (key.HitType == Key.KeyType.NORMAL)
             {
-                return;
+                HitKey(key, area);
             }
             else
             {
-                _ = DisablePad();
+                _ = HoldKey(key, area);
             }
-
-            keysInHitbox.Add(key);
-
-            string hitRating;
-            Vector2 posDifference = (this.GlobalPosition - area.GlobalPosition).Abs();
-            if (posDifference.X < 10 && posDifference.Y < 10)
-            {
-                hitRating = "Perfect!";
-                PlayerData.NumPerfects++;
-            }
-            else if (posDifference.X < 20 && posDifference.Y < 20)
-            {
-                hitRating = "Great!";
-                PlayerData.NumGreats++;
-            }
-            else if (posDifference.X < 40 && posDifference.Y < 40)
-            {
-                hitRating = "Good!";
-                PlayerData.NumGoods++;
-            }
-            else
-            {
-                hitRating = "Okay";
-                PlayerData.NumOkays++;
-            }
-
-            if (GameData.HitValues.ContainsKey(hitRating))
-                KeyHit?.Invoke(hitRating, GameData.HitValues[hitRating]);
-
-            Key firstKey = keysInHitbox.First();
-            foreach (Key k in keysInHitbox)
-            {
-                if (firstKey.GlobalPosition.Abs().X < k.GlobalPosition.Abs().X || firstKey.GlobalPosition.Abs().Y < k.GlobalPosition.Abs().Y)
-                {
-                    firstKey = k;
-                }
-            }
-            keysInHitbox.Remove(firstKey);
-            firstKey.Hit(hitRating);
         }
+    }
+
+    private void HitKey(Key key, Area2D area)
+    {
+        // disable pad to prevent hitting multiple keys at once
+        if (isPadDisabled)
+        {
+            return;
+        }
+        else
+        {
+            _ = DisablePad();
+        }
+
+        keysInHitbox.Add(key);
+
+        string hitRating;
+        Vector2 posDifference = (this.GlobalPosition - area.GlobalPosition).Abs();
+        if (posDifference.X < 10 && posDifference.Y < 10)
+        {
+            hitRating = "Perfect!";
+            PlayerData.NumPerfects++;
+        }
+        else if (posDifference.X < 20 && posDifference.Y < 20)
+        {
+            hitRating = "Great!";
+            PlayerData.NumGreats++;
+        }
+        else if (posDifference.X < 40 && posDifference.Y < 40)
+        {
+            hitRating = "Good!";
+            PlayerData.NumGoods++;
+        }
+        else
+        {
+            hitRating = "Okay";
+            PlayerData.NumOkays++;
+        }
+
+        if (GameData.HitValues.ContainsKey(hitRating))
+            KeyHit?.Invoke(hitRating, GameData.HitValues[hitRating]);
+
+        Key firstKey = keysInHitbox.First();
+        foreach (Key k in keysInHitbox)
+        {
+            if (firstKey.GlobalPosition.Abs().X < k.GlobalPosition.Abs().X || firstKey.GlobalPosition.Abs().Y < k.GlobalPosition.Abs().Y)
+            {
+                firstKey = k;
+            }
+        }
+        keysInHitbox.Remove(firstKey);
+        firstKey.Hit(hitRating);
+    }
+    
+    private async Task HoldKey(Key key, Area2D area)
+    {
+        key.Hold();
+        double startHoldTime = Time.GetTicksMsec();
+        double currentTime;
+        double keyScale = 1;
+        while (key.ShortenKey(keyScale) && IsPadSelected)
+        {
+            currentTime = Time.GetTicksMsec();
+            double elapsedTime = currentTime - startHoldTime;
+            keyScale = 1 - (elapsedTime / key.KeyLengthMs);
+            keyScale = Math.Clamp(keyScale, 0, 1);
+            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        }
+
+        string hitRating;
+        Vector2 posDifference = (this.GlobalPosition - area.GlobalPosition).Abs();
+        if (key.GetRemainingKeyLengthPercentage() >= 0.90)
+        {
+            hitRating = "Perfect!";
+            PlayerData.NumPerfects++;
+        }
+        else if (key.GetRemainingKeyLengthPercentage() >= 0.80)
+        {
+            hitRating = "Great!";
+            PlayerData.NumGreats++;
+        }
+        else if (key.GetRemainingKeyLengthPercentage() >= 0.60)
+        {
+            hitRating = "Good!";
+            PlayerData.NumGoods++;
+        }
+        else
+        {
+            hitRating = "Okay";
+            PlayerData.NumOkays++;
+        }
+
+        if (GameData.HitValues.ContainsKey(hitRating))
+            KeyHit?.Invoke(hitRating, GameData.HitValues[hitRating]);
+        
+        key.Hit(hitRating);
     }
 
     private async Task DisablePad()

@@ -55,9 +55,9 @@ public partial class PlayerController : Node2D
         SelectPads();
     }
 
-    private void MovePads()
+    private void MovePads() // TODO: Lock movement if key is being held, not if pad is selected
     {
-        if (Input.IsActionJustPressed("move_pad_up"))
+        if (Input.IsActionJustPressed("move_pad_up") && !leftPad.IsPadSelected && !rightPad.IsPadSelected)
         {
             if (leftRightPads.Position > Vector2.Up * maxDistance)
             {
@@ -68,7 +68,7 @@ public partial class PlayerController : Node2D
                 leftRightPads.Position -= Vector2.Up * movementDistance * 2;
             }
         }
-        else if (Input.IsActionJustPressed("move_pad_down"))
+        else if (Input.IsActionJustPressed("move_pad_down") && !leftPad.IsPadSelected && !rightPad.IsPadSelected)
         {
             if (leftRightPads.Position < Vector2.Down * maxDistance)
             {
@@ -80,7 +80,7 @@ public partial class PlayerController : Node2D
             }
         }
 
-        if (Input.IsActionJustPressed("move_pad_left"))
+        if (Input.IsActionJustPressed("move_pad_left") && !upPad.IsPadSelected && !downPad.IsPadSelected)
         {
             if (upDownPads.Position > Vector2.Left * maxDistance)
             {
@@ -91,7 +91,7 @@ public partial class PlayerController : Node2D
                 upDownPads.Position -= Vector2.Left * movementDistance * 2;
             }
         }
-        else if (Input.IsActionJustPressed("move_pad_right"))
+        else if (Input.IsActionJustPressed("move_pad_right") && !upPad.IsPadSelected && !downPad.IsPadSelected)
         {
             if (upDownPads.Position < Vector2.Right * maxDistance)
             {

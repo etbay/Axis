@@ -14,6 +14,8 @@ public partial class KeyGenerator : Node2D
     [Export] private Godot.Collections.Array<int> keySpawnTimeMs;
     [Export] private Godot.Collections.Array<Key.KeyDirection> keyDirections;
     [Export] private Godot.Collections.Array<Key.KeyOffset> keyOffsets;
+    [Export] private Godot.Collections.Array<Key.KeyType> keyTypes;
+    [Export] private Godot.Collections.Array<int> keyLengthMs;
     protected PackedScene KeyScene = GD.Load<PackedScene>("res://scenes/key.tscn");
     protected bool isLevelDone = false;
 
@@ -55,7 +57,7 @@ public partial class KeyGenerator : Node2D
         {
             int index = this.keySpawnQueue.Dequeue().Item2;
 
-            key.SetData(this.keyDirections[index], this.keyOffsets[index]);
+            key.SetData(this.keyDirections[index], this.keyOffsets[index], this.keyTypes[index], this.keyLengthMs[index]);
             key.SpawnTimeMs = this.SongPlaybackPosition;
             this.keySpawnOrder.Add(key);
             key.KeyDestroyed += this.OnKeyDestroy;
@@ -67,7 +69,8 @@ public partial class KeyGenerator : Node2D
 
     protected void OnKeyDestroy(Key key)
     {
-        this.keySpawnOrder.Remove(key);
+        if (this.keySpawnOrder.Contains(key))
+            this.keySpawnOrder.Remove(key);
         this.HighlightClosestKey();
     }
 

@@ -4,14 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://et037olil3hv" path="res://assets/KeyPadShape.png" id="2_fttkb"]
 [ext_resource type="Texture2D" uid="uid://c35pbbd7a4ov6" path="res://assets/KeyHitEffectShape.png" id="3_wy8tx"]
 
-[sub_resource type="Gradient" id="Gradient_fttkb"]
+[sub_resource type="Gradient" id="Gradient_brs3p"]
 offsets = PackedFloat32Array(0, 0.5, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
 metadata/_snap_enabled = true
 metadata/_snap_count = 20
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_wy8tx"]
-gradient = SubResource("Gradient_fttkb")
+gradient = SubResource("Gradient_brs3p")
 width = 100
 height = 100
 fill = 1
@@ -52,9 +52,23 @@ scale = Vector2(0.15, 0.45)
 texture = ExtResource("3_wy8tx")
 
 [node name="KeyLength" type="Node2D" parent="."]
-visible = false
 
 [node name="KeyLengthSprite" type="Sprite2D" parent="KeyLength"]
 position = Vector2(32, 0)
 scale = Vector2(1, 0.5)
 texture = SubResource("GradientTexture2D_brs3p")
+
+[node name="KeyLengthTailSprite" type="Sprite2D" parent="KeyLength/KeyLengthSprite"]
+modulate = Color(1, 1, 1, 0.37600002)
+top_level = true
+z_index = 1
+position = Vector2(63.735, 0)
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("2_fttkb")
+
+[node name="remote_transform_2d" type="RemoteTransform2D" parent="KeyLength/KeyLengthSprite"]
+position = Vector2(31.735, 0)
+scale = Vector2(0.08, 0.16)
+remote_path = NodePath("../KeyLengthTailSprite")
+update_rotation = false
+update_scale = false
