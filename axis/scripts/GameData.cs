@@ -28,8 +28,7 @@ public static class GameData
     public static PackedScene LevelSelection { get; } = GD.Load<PackedScene>("res://scenes/levels/level_select.tscn");
     public static Dictionary<int, PackedScene> Levels { get; } = new Dictionary<int, PackedScene>()
     {
-        { 1, GD.Load<PackedScene>("res://scenes/levels/level_one.tscn") },
-        { 2, GD.Load<PackedScene>("res://scenes/levels/level_two.tscn") }
+        { 1, GD.Load<PackedScene>("res://scenes/levels/level_one.tscn") }
     };
     
     public static PackedScene LevelSummary { get; } = GD.Load<PackedScene>("res://scenes/levels/level_summary.tscn");

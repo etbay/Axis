@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ccoky6bbpcp7x"]
+[gd_scene load_steps=17 format=3 uid="uid://ccoky6bbpcp7x"]
 
 [ext_resource type="Script" uid="uid://bbby1xha4vrei" path="res://scripts/GameManager.cs" id="1_b8rg6"]
 [ext_resource type="PackedScene" uid="uid://ciacnxn0vlnk6" path="res://scenes/player/player_controller.tscn" id="2_nev0s"]
@@ -10,7 +10,39 @@
 [ext_resource type="Script" uid="uid://dqne3e1ddvnii" path="res://scripts/ui/EndlessHighScoreLabel.cs" id="8_i3qp7"]
 [ext_resource type="Script" uid="uid://c4k0nj3o6c3ra" path="res://scripts/ui/GameUserInterface.cs" id="9_owisn"]
 
+[sub_resource type="SystemFont" id="SystemFont_xqir7"]
+font_names = PackedStringArray("Consolas")
+
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mm7tu"]
+
+[sub_resource type="SystemFont" id="SystemFont_owisn"]
+font_names = PackedStringArray("Consolas")
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_b0w8g"]
+font_names = PackedStringArray("Consolas")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_owisn"]
+bg_color = Color(0.37241852, 9.464912e-05, 0.37241587, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b0w8g"]
+bg_color = Color(0.6367873, 0.00030149103, 0.63678306, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqir7"]
+bg_color = Color(0.6367873, 0.00030149103, 0.63678306, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="level_template" type="Node2D"]
 script = ExtResource("1_b8rg6")
@@ -49,6 +81,8 @@ offset_right = 30.0
 offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_xqir7")
+theme_override_font_sizes/font_size = 24
 text = "Great!"
 horizontal_alignment = 1
 
@@ -56,6 +90,8 @@ horizontal_alignment = 1
 layout_mode = 1
 offset_right = 148.0
 offset_bottom = 34.0
+theme_override_fonts/font = SubResource("SystemFont_xqir7")
+theme_override_font_sizes/font_size = 32
 text = "1000000"
 
 [node name="LivesCountLabel" type="Label" parent="GameUI"]
@@ -66,6 +102,8 @@ anchor_right = 1.0
 offset_left = -57.0
 offset_bottom = 23.0
 grow_horizontal = 0
+theme_override_fonts/font = SubResource("SystemFont_xqir7")
+theme_override_font_sizes/font_size = 32
 text = "Lives: 3"
 script = ExtResource("3_b8rg6")
 
@@ -97,6 +135,8 @@ offset_top = -260.0
 offset_bottom = -192.99997
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_owisn")
 theme_override_font_sizes/font_size = 48
 text = "Select Difficulty"
 horizontal_alignment = 1
@@ -108,20 +148,26 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -202.0
-offset_top = -160.0
-offset_right = 202.0
-offset_bottom = 160.0
+offset_left = -216.5
+offset_top = -147.59
+offset_right = 216.5
+offset_bottom = 202.41003
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Speed Options" type="VBoxContainer" parent="Difficulty Select/h_box_container"]
+custom_minimum_size = Vector2(231.74, 0)
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="Boring" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_owisn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_b0w8g")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xqir7")
 text = "1 (Boring)"
 script = ExtResource("6_nev0s")
 speed = 1
@@ -129,7 +175,11 @@ speed = 1
 [node name="Easy" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_owisn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_b0w8g")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xqir7")
 text = "2 (Easy)"
 script = ExtResource("6_nev0s")
 speed = 2
@@ -137,7 +187,11 @@ speed = 2
 [node name="Normal" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_owisn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_b0w8g")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xqir7")
 text = "3 (Normal)"
 script = ExtResource("6_nev0s")
 speed = 3
@@ -145,7 +199,11 @@ speed = 3
 [node name="Hard" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_owisn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_b0w8g")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xqir7")
 text = "4 (Hard)"
 script = ExtResource("6_nev0s")
 speed = 4
@@ -153,7 +211,11 @@ speed = 4
 [node name="Very Hard" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_owisn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_b0w8g")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xqir7")
 text = "5 (Very Hard)"
 script = ExtResource("6_nev0s")
 speed = 5
@@ -161,17 +223,23 @@ speed = 5
 [node name="Extra Hard" type="Button" parent="Difficulty Select/h_box_container/Speed Options"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_owisn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_b0w8g")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xqir7")
 text = "6 (Impossible)"
 script = ExtResource("6_nev0s")
 speed = 6
 
 [node name="High Scores" type="VBoxContainer" parent="Difficulty Select/h_box_container"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="BoringHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 20
 text = "High Score: "
 horizontal_alignment = 1
@@ -182,6 +250,7 @@ speed = 1
 [node name="EasyHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 20
 text = "High Score: "
 horizontal_alignment = 1
@@ -192,6 +261,7 @@ speed = 2
 [node name="NormalHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 20
 text = "High Score: "
 horizontal_alignment = 1
@@ -202,6 +272,7 @@ speed = 3
 [node name="HardHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 20
 text = "High Score: "
 horizontal_alignment = 1
@@ -212,6 +283,7 @@ speed = 4
 [node name="VeryHardHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 20
 text = "High Score: "
 horizontal_alignment = 1
@@ -222,6 +294,7 @@ speed = 5
 [node name="ImpossibleHighScore" type="Label" parent="Difficulty Select/h_box_container/High Scores"]
 custom_minimum_size = Vector2(198.425, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_b0w8g")
 theme_override_font_sizes/font_size = 20
 text = "High Score: "
 horizontal_alignment = 1

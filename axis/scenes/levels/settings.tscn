@@ -1,8 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2lklp55pqm7h"]
+[gd_scene load_steps=10 format=3 uid="uid://c2lklp55pqm7h"]
 
 [ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="1_h3b85"]
 [ext_resource type="Script" uid="uid://bbby1xha4vrei" path="res://scripts/GameManager.cs" id="1_hlmtr"]
 [ext_resource type="Script" uid="uid://ct8my50l314tf" path="res://scripts/ui/VideoSettings.cs" id="2_ni6ub"]
+
+[sub_resource type="SystemFont" id="SystemFont_ni6ub"]
+font_names = PackedStringArray("Consolas")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ni6ub"]
+
+[sub_resource type="Theme" id="Theme_ni6ub"]
+TabContainer/fonts/font = SubResource("SystemFont_ni6ub")
+TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_ni6ub")
+
+[sub_resource type="SystemFont" id="SystemFont_dleyi"]
+font_names = PackedStringArray("Consolas")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dleyi"]
+
+[sub_resource type="Theme" id="Theme_kwjuh"]
+CheckBox/fonts/font = SubResource("SystemFont_dleyi")
+CheckBox/styles/focus = SubResource("StyleBoxEmpty_dleyi")
 
 [node name="settings" type="Node2D"]
 script = ExtResource("1_hlmtr")
@@ -25,24 +43,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_ni6ub")
 theme_override_font_sizes/font_size = 24
 tab_alignment = 1
 current_tab = 0
 
-[node name="Controls" type="Control" parent="Menu/tab_container"]
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="Audio" type="Control" parent="Menu/tab_container"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
 [node name="Video" type="Control" parent="Menu/tab_container"]
-visible = false
 layout_mode = 2
 script = ExtResource("2_ni6ub")
-metadata/_tab_index = 2
+metadata/_tab_index = 0
 
 [node name="Settings" type="VBoxContainer" parent="Menu/tab_container/Video"]
 layout_mode = 1
@@ -60,6 +69,7 @@ grow_vertical = 2
 
 [node name="FullscreenCheckBox" type="CheckBox" parent="Menu/tab_container/Video/Settings"]
 layout_mode = 2
+theme = SubResource("Theme_kwjuh")
 text = "Fullscreen"
 
 [node name="ResolutionOptions" type="OptionButton" parent="Menu/tab_container/Video/Settings"]

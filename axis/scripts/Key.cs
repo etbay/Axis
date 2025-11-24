@@ -222,9 +222,13 @@ public partial class Key : Area2D
         fadeInTween.Play();
         await ToSignal(fadeInTween, "finished");
 
-        Tween keyLengthfadeOutTween = CreateTween();
-        keyLengthfadeOutTween.TweenProperty(this.keyLength, "modulate:a", 0f, 0.3f);
-        keyLengthfadeOutTween.Play();
+        Tween keyLengthFadeOutTween = CreateTween();
+        keyLengthFadeOutTween.TweenProperty(this.keyLength, "modulate:a", 0f, 0.3f);
+        keyLengthFadeOutTween.Play();
+
+        Tween keyLengthTailFadeOutTween = CreateTween();
+        keyLengthTailFadeOutTween.TweenProperty(this.keyLengthTail, "modulate:a", 0f, 0.3f);
+        keyLengthTailFadeOutTween.Play();
 
         Tween fadeOutTween = CreateTween();
         fadeOutTween.TweenProperty(this.hitEffect, "modulate:a", 0f, 0.3f);

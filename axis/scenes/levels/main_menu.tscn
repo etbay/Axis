@@ -1,8 +1,74 @@
-[gd_scene load_steps=4 format=3 uid="uid://cuwnmvtw5dtwr"]
+[gd_scene load_steps=15 format=3 uid="uid://cuwnmvtw5dtwr"]
 
 [ext_resource type="Script" uid="uid://d26yeutbpbn3" path="res://scripts/GameLoader.cs" id="1_fkd6t"]
 [ext_resource type="Script" uid="uid://bgtfnt282paph" path="res://scripts/ui/MainMenu.cs" id="2_721jg"]
 [ext_resource type="Texture2D" uid="uid://c71fk4yl35yrn" path="res://assets/Background.tres" id="3_fkd6t"]
+
+[sub_resource type="SystemFont" id="SystemFont_geflf"]
+font_names = PackedStringArray("Consolas")
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_721jg"]
+bg_color = Color(9.3854965e-07, 0.30086517, 0.30086505, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkd6t"]
+bg_color = Color(0, 0.46666667, 0.46666667, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_721jg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_geflf"]
+bg_color = Color(0.37241852, 9.464912e-05, 0.37241587, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_keln3"]
+bg_color = Color(0.6367873, 0.00030149103, 0.63678306, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crctu"]
+bg_color = Color(0, 0.33405134, 4.3317675e-07, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sn5u3"]
+bg_color = Color(2.7314202e-06, 0.4810285, 1.92523e-07, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cn35j"]
+bg_color = Color(0.40784314, 0.25490198, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wko7x"]
+bg_color = Color(0.59836304, 0.38246632, 1.92523e-07, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="SystemFont" id="SystemFont_721jg"]
+font_names = PackedStringArray("Consolas")
+subpixel_positioning = 0
 
 [node name="main_menu" type="Node2D"]
 script = ExtResource("1_fkd6t")
@@ -20,40 +86,72 @@ size_flags_vertical = 3
 script = ExtResource("2_721jg")
 
 [node name="Buttons" type="VBoxContainer" parent="MainMenu"]
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -60.0
-offset_right = 100.0
-offset_bottom = 160.00012
+offset_left = -75.0
+offset_top = -76.20001
+offset_right = 75.0
+offset_bottom = 143.80005
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="MainMenu/Buttons"]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_geflf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_721jg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fkd6t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fkd6t")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_721jg")
 text = "Play"
 
 [node name="EndlessModeButton" type="Button" parent="MainMenu/Buttons"]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_colors/icon_normal_color = Color(0.3328807, 0.33288068, 0.33288068, 1)
+theme_override_colors/icon_focus_color = Color(0.65012825, 0.6501283, 0.65012825, 1)
+theme_override_colors/icon_pressed_color = Color(0.1728327, 0.17283267, 0.17283267, 1)
+theme_override_colors/icon_hover_color = Color(0.6509804, 0.6509804, 0.6509804, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.17254902, 0.17254902, 0.17254902, 1)
+theme_override_fonts/font = SubResource("SystemFont_geflf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_geflf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_keln3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_keln3")
 text = "Endless"
 
 [node name="SettingsButton" type="Button" parent="MainMenu/Buttons"]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_colors/icon_normal_color = Color(0.3328807, 0.33288068, 0.33288068, 1)
+theme_override_colors/icon_focus_color = Color(0.65012825, 0.6501283, 0.65012825, 1)
+theme_override_colors/icon_pressed_color = Color(0.1728327, 0.17283267, 0.17283267, 1)
+theme_override_colors/icon_hover_color = Color(0.6509804, 0.6509804, 0.6509804, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.17254902, 0.17254902, 0.17254902, 1)
+theme_override_fonts/font = SubResource("SystemFont_geflf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_crctu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_sn5u3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_sn5u3")
 text = "Settings"
 
 [node name="ExitButton" type="Button" parent="MainMenu/Buttons"]
-custom_minimum_size = Vector2(0, 40)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme_override_colors/icon_normal_color = Color(0.3328807, 0.33288068, 0.33288068, 1)
+theme_override_colors/icon_focus_color = Color(0.65012825, 0.6501283, 0.65012825, 1)
+theme_override_colors/icon_pressed_color = Color(0.1728327, 0.17283267, 0.17283267, 1)
+theme_override_colors/icon_hover_color = Color(0.6509804, 0.6509804, 0.6509804, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.17254902, 0.17254902, 0.17254902, 1)
+theme_override_fonts/font = SubResource("SystemFont_geflf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cn35j")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wko7x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wko7x")
 text = "Exit"
 
 [node name="Axis Horizontal Container" type="HBoxContainer" parent="MainMenu"]
@@ -73,6 +171,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_721jg")
 theme_override_font_sizes/font_size = 80
 text = "A"
 horizontal_alignment = 1
@@ -82,6 +181,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_721jg")
 theme_override_font_sizes/font_size = 80
 text = "X"
 horizontal_alignment = 1
@@ -91,6 +191,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_721jg")
 theme_override_font_sizes/font_size = 80
 text = "I"
 horizontal_alignment = 1
@@ -100,6 +201,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
 theme_override_colors/font_color = Color(1, 0.64705884, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_721jg")
 theme_override_font_sizes/font_size = 80
 text = "S"
 horizontal_alignment = 1

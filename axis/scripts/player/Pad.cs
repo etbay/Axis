@@ -12,6 +12,7 @@ public partial class Pad : Area2D
     private PointLight2D light;
     private bool isPadDisabled = false;
     private List<Key> keysInHitbox = new List<Key>();
+    public bool IsKeyBeingHeld { get; private set; } = false;
     public bool IsPadSelected { get; private set; } = false;
 
     public override void _Ready()
@@ -131,6 +132,7 @@ public partial class Pad : Area2D
         double startHoldTime = Time.GetTicksMsec();
         double currentTime;
         double keyScale = 1;
+        IsKeyBeingHeld = true;
         while (key.ShortenKey(keyScale) && IsPadSelected)
         {
             currentTime = Time.GetTicksMsec();
@@ -140,6 +142,7 @@ public partial class Pad : Area2D
             await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         }
 
+        IsKeyBeingHeld = false;
         string hitRating;
         Vector2 posDifference = (this.GlobalPosition - area.GlobalPosition).Abs();
         if (key.GetRemainingKeyLengthPercentage() >= 0.90)
